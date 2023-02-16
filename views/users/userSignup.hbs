@@ -37,10 +37,6 @@ background: transparent;
                   <input type="email" id="typePasswordX" class="form-control form-control-lg" required
                     style="background: transparent; color: white" placeholder="E-mail" name="email" />
                 </div>
-                <p>
-
-                    {{duplicate}}
-                </p>
                  <div class="form-outline form-white mb-4">
                   <input type="number" id="typeEmailX" class="form-control form-control-lg" required
                     style="background: transparent;color: white;" placeholder="Phone NO" name="phoneno" />
@@ -53,6 +49,9 @@ background: transparent;
                   <input type="password" id="typeEmailX" class="form-control form-control-lg" required
                     style="background: transparent;color: white;" placeholder="ConfirmPassword" name="confirmpassword" />
                 </div>
+                   <p class="text-danger">
+                  {{message}}
+                </p>
                 <button type="submit" class="btn btn-outline-primary">signUp</button>
                       <div style="display: flex; justify-content: center; padding-top: 20px;">
                   <p style="font-size: 10px;">Extisting user?</p>

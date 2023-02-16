@@ -1,18 +1,26 @@
 const express=require('express');
 const router=express.Router();
 
-const {Home,Login,SignUp,getOTP,postSignUp,postOTP,resendOTP,postLogin,ForgotPasswordemil,postForgotPassword}=require('../controllers/user')
+const {getHomePage,
+      getLoginPage,postLoginPage,
+      getUserSignUpPage,postSignUpPage,
+      getOtpPage,postOtpPage,resendOTP,
+      ForgotPasswordemil,postForgotPassword,
+      getAllProductPage}=require('../controllers/user')
 
-router.get('/',Home)
-router.get('/login',Login)
-router.get('/signup',SignUp)
-router.get('/otp',getOTP)
+router.get('/',getHomePage)
+router.get('/login',getLoginPage)
+router.get('/signup',getUserSignUpPage)
+router.get('/otp',getOtpPage)
 router.get('/resend',resendOTP)
 router.get('/forgot',ForgotPasswordemil)
+router.get('/productpage',getAllProductPage)
+
+
 router.post('/forgot',postForgotPassword)
-router.post('/signup',postSignUp)
-router.post('/otp',postOTP)
-router.post('/login',postLogin)
+router.post('/signup',postSignUpPage)
+router.post('/otp',postOtpPage)
+router.post('/login',postLoginPage)
  
 
  

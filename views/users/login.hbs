@@ -38,12 +38,11 @@ background: transparent;
                   <input type="password" id="typePasswordX" class="form-control form-control-lg"
                     style="background: transparent; color: white" placeholder="Password" name="password" />
                 </div>
+                <p class="text-danger">
+                    {{message}}
+                </p>
                 <button type="submit" class="btn btn-outline-primary">Login</button>
-                    {{#if passworderr}}
-            <div class="form-outline mb-4">
-              <b class="text-danger">invalid email or password</b>
-            </div>
-            {{/if}}
+              
                 <div style="display: flex; justify-content: center; padding-top: 20px;">
                   <p style="font-size: 10px;">Don't have an account?</p>
                  <a href="/signup"><p style="font-size: 11px; font-weight: bold; color: white;">Create a new account</p></a> 

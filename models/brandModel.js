@@ -5,6 +5,14 @@ const brandSchema = new mongoose.Schema({
     type: String, 
     required: true
    },
+   image:{
+    type:Object,
+    required : true,
+}, 
+ banner:{
+  type:Object,
+  required : true,
+},  
    block:{
     type:Boolean,
     required:true

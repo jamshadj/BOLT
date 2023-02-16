@@ -77,7 +77,7 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="/admin/addbrand">
+          <a class="nav-link" href="/admin/brand">
             <span class="menu-icon">
               <i class="mdi mdi-playlist-play"></i>
             </span>
@@ -204,21 +204,21 @@
   </div>
   <div class="form-group" style=" padding-left: 3rem;">
      <div>
- <img src="/photos/{{product.image.filename}}" alt="" style="width:4rem; height: 4rem;">
+ <img src="/photos/{{product.image.filename}}" alt="" style="width:4rem; height: 4rem;" id="imageview">
       </div>
     <label for="exampleFormControlFile1">Main Image</label>
-    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image" onchange="viewImage(event)" >
   </div>
 
      <div class="form-group" style="padding-left: 3rem;">
       <div>
         {{#each product.subimage}}
- <img src="/photos/{{this.filename}}" alt="" style="width:4rem; height: 4rem;">
+ <img src="/photos/{{this.filename}}" alt="" style="width:4rem; height: 4rem;" id="allImageView">
   {{/each}}
       </div>
      
     <label for="exampleFormControlFile1">Sub Image</label>
-    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="subimage" multiple>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="subimage" onchange="viewAllImage(event)" multiple>
   </div>
   <!-- Submit button -->
   <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
@@ -248,6 +248,12 @@
   <!-- endinject -->
   <!-- Custom js for this page -->
   <script src="/assets/js/dashboard.js"></script>
+  <script>
+    function viewImage(event){
+      document.getElementById("imageview").src=URL.createObjectURL(event.target.files[0])
+      document.getElementById("allImageview").src=URL.createObjectURL(event.target.files[0,1,2])
+    }
+  </script>
   <!-- End custom js for this page -->
 </body>
 

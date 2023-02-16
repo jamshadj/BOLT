@@ -2,6 +2,8 @@
 const express=require('express')
 const hbs=require('express-handlebars')
 var bodyParser = require('body-parser')
+const session=require('express-session')
+
 
 const app=express();
 
@@ -9,6 +11,14 @@ const app=express();
 const adminRoutes = require('./routes/admin')
 const userRouters= require('./routes/user')
 const dbConnect=require('./dbconnect');
+
+//SESSION
+app.use(session({secret:"key",resave:false,saveUninitialized:true}))
+
+app.use(function(req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    next();
+});
 
 
 //STYLE LINKING

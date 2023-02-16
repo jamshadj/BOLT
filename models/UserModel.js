@@ -17,10 +17,7 @@ const userschema= new mongoose.Schema({
         type: String,
           required:true
       },
-    confirmpassword:{
-        type: String,
-          required:true
-      },
+   
     block:{
         type:Boolean,
         required:true

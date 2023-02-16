@@ -1,105 +1,109 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 
-const {AdminLoginPage,
-       AdminhomePage,
-       AdminLogin,
-       getProductsPage,
-       getAddProducts,
-       PostAddProducts,
-       getproductedit,
-       postProductEdit,
-       blockproduct,
-       unblockproduct,
-       getcategory,
-       postAddCategory,
-       blockcategory,
-       unblockcategory,
-       getCategoryEdit,
-       postCategoryEdit,
-       getbrand,
-       postbrand,
-       blockBrand,
-       unblockBrand,
-       getBrandEdit,
-       postBrandEdit,
-       blockUser,
-       unblockUser,
-       getbanner,
-       getcoupon,
-       users,
-       orders,
-       addbanner,
-       PostAddbanner,
-       deleteBanner,
-       getaddCoupon,
-       postAddCoupon,
-       getCouponEdit,
-       postCouponEdit,
-       deleteCoupon
-      
-      
-    
-   
-       
-      }=require('../controllers/admin');
+
+const {
+      getAdminLoginPage, postAdminLogin,
+      getAdminHomePage,
+
+      //product
+      getProductsPage,
+      getAddProducts, postAddProducts,
+      getProductEdit, postProductEdit,
+      blockProduct, unblockProduct,
+
+      //category
+      getCategory, postAddCategory,
+      blockCategory, unblockCategory,
+      getCategoryEdit, postCategoryEdit,
+
+      //brand
+      getBrand,
+      getAddBrand, postAddBrand,
+      blockBrand, unblockBrand,
+      getBrandEdit, postBrandEdit,
+
+      //user
+      getUsers,
+      blockUser, unblockUser,
+
+      //banner
+      getBanner,
+      getAddBanner, PostAddBanner,
+      deleteBanner,
+
+      //coupon
+      getCoupon,
+      getAddCoupon, postAddCoupon,
+      getCouponEdit, postCouponEdit,
+      deleteCoupon,
+
+
+
+      orders,
+
+
+
+} = require('../controllers/admin');
+const verifyAdmin = require('../middlewares/adminSession');
 const upload = require('../middlewares/multer');
 
 
 //ROUTER SETTING
-router.get('/',AdminLoginPage)
-router.get('/home',AdminhomePage)
+router.get('/', getAdminLoginPage)
+router.get('/home', getAdminHomePage)
 
-router.get('/products',getProductsPage)
-router.get('/addproducts',getAddProducts)
-router.get('/productedit/:id',getproductedit)
-router.get('/blockproduct/:id',blockproduct)
-router.get('/unblockproduct/:id',unblockproduct)
+router.get('/products', getProductsPage)
+router.get('/addproducts', getAddProducts)
+router.get('/productedit/:id', getProductEdit)
+router.get('/blockproduct/:id', blockProduct)
+router.get('/unblockproduct/:id', unblockProduct)
 
-router.get('/addcategory',getcategory)
-router.get('/blockcategory/:id',blockcategory)
-router.get('/unblockcategory/:id',unblockcategory)
-router.get('/categoryedit/:id',getCategoryEdit)
+router.get('/addcategory', getCategory)
+router.get('/blockcategory/:id', blockCategory)
+router.get('/unblockcategory/:id', unblockCategory)
+router.get('/categoryedit/:id', getCategoryEdit)
 
-router.get('/addbrand',getbrand)
-router.get('/blockbrand/:id',blockBrand)
-router.get('/unblockbrand/:id',unblockBrand)
-router.get('/brandedit/:id',getBrandEdit)
+router.get('/brand', getBrand)
+router.get('/addbrand', getAddBrand)
+router.get('/blockbrand/:id', blockBrand)
+router.get('/unblockbrand/:id', unblockBrand)
+router.get('/brandedit/:id', getBrandEdit)
 
-router.get('/users',users)
-router.get('/blockuser/:id',blockUser)
-router.get('/unblockuser/:id',unblockUser)
+router.get('/users', getUsers)
+router.get('/blockuser/:id', blockUser)
+router.get('/unblockuser/:id', unblockUser)
 
-router.get('/banner',getbanner)
-router.get('/addbanner',addbanner)
-router.get('/deletebanner/:id',deleteBanner)
-
-
-router.get('/coupon',getcoupon)
-router.get('/addcupon',getaddCoupon)
-router.get('/couponedit/:id',getCouponEdit)
-router.get('/deletecoupon/:id',deleteCoupon)
-router.get('/orders',orders)
+router.get('/banner', getBanner)
+router.get('/addbanner', getAddBanner)
+router.get('/deletebanner/:id', deleteBanner)
 
 
-
+router.get('/coupon', getCoupon)
+router.get('/addcupon', getAddCoupon)
+router.get('/couponedit/:id', getCouponEdit)
+router.get('/deletecoupon/:id', deleteCoupon)
+router.get('/orders', orders)
 
 
 
 
 
 
-router.post('/adminlogin',AdminLogin)
-router.post('/addproducts',upload.fields([{ name: 'image', maxCount: 1 },{ name: 'subimage', maxCount: 3 }]),PostAddProducts)
-router.post('/productedit',upload.fields([{ name: 'image', maxCount: 1 },{ name: 'subimage', maxCount: 3 }]), postProductEdit)
-router.post('/addcategory',postAddCategory)
-router.post('/categoryedit',postCategoryEdit)
-router.post('/addbrand',postbrand)
-router.post('/brandedit',postBrandEdit)
-router.post('/addbanner',upload.single('image'),PostAddbanner)
-router.post('/addcoupon',postAddCoupon)
-router.post('/couponedit',postCouponEdit)
 
- 
- 
+
+
+router.post('/adminlogin', postAdminLogin)
+router.post('/addproducts', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'subimage', maxCount: 3 }]), postAddProducts)
+router.post('/productedit', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'subimage', maxCount: 3 }]), postProductEdit)
+router.post('/addcategory', postAddCategory)
+router.post('/categoryedit', postCategoryEdit)
+router.post('/addbrand', upload.fields([{ name: 'image' }, { name: 'banner'}]), postAddBrand)
+router.post('/brandedit', upload.fields([{ name: 'image' }, { name: 'banner'}]), postBrandEdit)
+router.post('/addbanner', upload.single('image'), PostAddBanner)
+router.post('/addcoupon', postAddCoupon)
+router.post('/couponedit', postCouponEdit)
+
+router.use(verifyAdmin)
+
 module.exports = router;

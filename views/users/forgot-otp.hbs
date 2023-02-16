@@ -56,10 +56,10 @@ background-color: #17181E;
 
 
 
-  var countDownTime = 60000;
+  var countDownTime = 30000;
   var x = setInterval(function () {
     countDownTime -= 1000;
-    var seconds = Math.floor((countDownTime % (1000 * 60)) / 1000);
+    var seconds = Math.floor((countDownTime % (1000 * 120)) / 1000);
     document.getElementById("countdown").innerHTML = "otp expire in " + seconds + "s ";
     if (countDownTime < 0) {
       clearInterval(x);

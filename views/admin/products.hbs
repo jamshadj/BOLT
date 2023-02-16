@@ -76,7 +76,7 @@
             </a>
           </li>
               <li class="nav-item menu-items">
-            <a class="nav-link" href="/admin/addbrand">
+            <a class="nav-link" href="/admin/brand">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
@@ -190,24 +190,25 @@
           </div>
         </nav>
        </header>
+       <div>
         <!-- partial -->
         <section style="    display: flex;
 background-color: #dfdfdf;
-justify-content: center; width: 100vw;">
-    <table class="table table-striped " style="width: 70vw; margin: 5rem; color: rgb(0, 0, 0); border: 2px solid; border-color: #2a272745; ">
+justify-content: center; ">
+    <table class="table table-stipped" style="margin: 5rem; margin-left: 0px; color: rgb(0, 0, 0); border: 2px solid; border-color: #2a272745; ">
         <thead style="border: 2px solid; border-color: black;">
           <tr style="background-color: white; color: white;">
-      <th scope="col">NO</th>
-      <th scope="col">Image</th>
-      <th scope="col">Nmae</th>
-      <th scope="col">Category</th>
-      <th scope="col">Brand</th>
-      <th scope="col">Stock</th>
-       <th scope="col">Prize</th>
-        <th scope="col">MRP</th>
-       <th scope="col">Description</th>
-       <th scope="col">Edit</th>
-      <th scope="col">Status</th>
+      <th scope="col-sm">NO</th>
+      <th scope="col-sm">Image</th>
+      <th scope="col-sm">Name</th>
+      <th scope="col-sm">Category</th>
+      <th scope="col-sm">Brand</th>
+      <th scope="col-sm">Stock</th>
+       <th scope="col-sm">Prize</th>128px
+        <th scope="col-sm">MRP</th>
+       <th scope="col-sm">Description</th>
+       <th scope="col-sm">Edit</th>
+      <th scope="col-sm">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -215,13 +216,14 @@ justify-content: center; width: 100vw;">
           <tr style="background-color: #ffffff; height: 3rem;" >
              <th scope="row">1</th>
       <td><img src="/photos/{{this.image.filename}}" alt="" style="width: 40px; height: 40px;"></td>
-      <td>{{this.productname}}</td>
+      <td style="white-space:pre-wrap">{{this.productname}}</td>
       <td>{{this.category}}</td>
       <td>{{this.brand}}</td>
       <td>{{this.quantity}}</td>
       <td>{{this.prize}}</td>
-      <td>{{this.MRP}}</td>
-      <td>{{this.description}}</td>
+      <td >{{this.MRP}}</td>
+      <td style="white-space:pre-wrap">{{this.description}}</td>
+
       
         <td><a href="/admin/productedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
         <td>  {{#if this.block}}
@@ -238,6 +240,50 @@ justify-content: center; width: 100vw;">
         </tbody>
       </table>
 </section>
+</div>
+{{!-- <table class="table">
+  <thead>
+    <tr>
+       <th scope="col">NO</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Brand</th>
+      <th scope="col">Stock</th>
+       <th scope="col">Prize</th>128px
+        <th scope="col">MRP</th>
+       <th scope="col">Description</th>
+       <th scope="col">Edit</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each productsdetail}}
+    <tr>
+ <th scope="row">1</th>
+      <td><img src="/photos/{{this.image.filename}}" alt="" style="width: 40px; height: 40px;"></td>
+      <td>{{this.productname}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.brand}}</td>
+      <td>{{this.quantity}}</td>
+      <td>{{this.prize}}</td>
+      <td >{{this.MRP}}</td>
+      <td>{{this.description}}</td>
+      
+        <td><a href="/admin/productedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+        <td>  {{#if this.block}}
+                <button
+                  onclick="if( confirm(' Are you sure to unblock product?')){window.location.href='/admin/unblockproduct/{{this._id}}' }"
+                  class="btn btn-success ">Unblock</button>
+                {{else}}
+                <button
+                  onclick="if( confirm(' Are you sure to block product?')){window.location.href='/admin/blockproduct/{{this._id}}' }"
+                  class="btn btn-danger ">Block</button>
+                {{/if}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table> --}}
           <!-- content-wrapper ends -->
           <!-- partial -->
         </div>

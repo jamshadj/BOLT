@@ -39,6 +39,9 @@ background-color: #17181E;
                     </a>
                   </div>
                 </div>
+                <p class="text-danger">
+                  {{message}}
+                </p>
                 <button type="submit" class="btn btn-outline-primary">Submit</button>
 
               </div>
@@ -56,15 +59,15 @@ background-color: #17181E;
 
 
 
-  var countDownTime = 60000;
+  var countDownTime = 12000;
+    var seconds = 120;
   var x = setInterval(function () {
-    countDownTime -= 1000;
-    var seconds = Math.floor((countDownTime % (1000 * 60)) / 1000);
-    document.getElementById("countdown").innerHTML = "otp expire in " + seconds + "s ";
-    if (countDownTime < 0) {
+    seconds--;
+    document.getElementById("countdown").innerHTML = "OTP wil expire in " + seconds + "s ";
+    if (seconds < 0) {
       clearInterval(x);
       document.getElementById("countdown").innerHTML = ""
       document.getElementById("unhide").style.display = "block";
     }
   }, 1000);
-</script>
+</script> 

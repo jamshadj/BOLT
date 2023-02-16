@@ -76,7 +76,7 @@
             </a>
           </li>
               <li class="nav-item menu-items">
-            <a class="nav-link" href="/admin/addbrand">
+            <a class="nav-link" href="/admin/brand">
               <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
@@ -212,8 +212,8 @@ justify-content: center; width: 100vw;">
       <th scope="row">1</th>
       
       <td>{{this.name}}</td>
-       <td>{{this.description}}</td>
-        <td><img src="/photos/{{this.image.filename}}"style="border-radius: 0px; width: 60px; height: 40px;  " alt=""></td>
+       <td style="white-space:pre-wrap">{{this.description}}</td>
+        <td><img src="/photos/{{this.image.filename}}"style="border-radius: 0px; width: 40px; height: 60px;  " alt="" ></td>
   
     <td><a href="/admin/deletebanner/{{this._id}}" > <button class="btn btn-danger" onclick="if( confirm(' Are you sure to delete banner?')){window.location.href='/admin/deletebanner/{{this._id}}'}">Delete</button></a>
     </tr>
