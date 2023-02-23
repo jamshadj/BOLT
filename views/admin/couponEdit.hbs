@@ -12,11 +12,12 @@
                                 </span>
                             </div>
 
-                            <h2 class="fw-bold text-dark text-uppercase">Add Coupon</h2>
+                            <h2 class="fw-bold text-dark text-uppercase">Edit Coupon</h2>
                             <div class="form-outline mb-4">
                                 <div class="form-outline form-white mb-5">
                                     <div style="color: black; text-align: left; margin-bottom: 1rem;">
-                                                                        <input type="text" name="_id" value="{{coupon._id}}" style="height:0px; visibility:hidden">
+                                        <input type="text" name="_id" value="{{coupon._id}}"
+                                            style="height:0px; visibility:hidden">
                                         <label class="form-label" for="form4Example1"></label>
                                         <input type="text" name="name" value="{{coupon.name}}" placeholder="Name"
                                             class="form-control form-control-lg" required />
@@ -24,8 +25,33 @@
                                     <div style="color: black; text-align: left; margin-bottom: 1rem;">
                                         <label class="form-label" for="form4Example1"></label>
                                         <input type="text" name="code" placeholder="Code"
-                                            class="form-control form-control-lg" required value="{{coupon.code}}"/>
+                                            class="form-control form-control-lg" required value="{{coupon.code}}" />
                                     </div>
+                                    <div style="color: black; text-align: left; margin-bottom: 1rem;">
+                                        <label class="form-label" for="form4Example1"></label>
+                                        <input type="text" name="discount" placeholder="amount"
+                                            class="form-control form-control-lg" required value="{{coupon.discount}}" />
+                                    </div>
+
+                                    <div style="color: black; text-align: left; margin-bottom: 1rem;">
+                                        <label class="form-label" for="form4Example1"></label>
+                                        <input type="text" name="expiration_date" placeholder="expirydate"
+                                            class="form-control form-control-lg" required
+                                            value="{{coupon.expiration_date}}" />
+                                    </div>
+                                    <div style="color: black; text-align: left; margin-bottom: 1rem;">
+                                        <label class="form-label" for="form4Example1"></label>
+                                        <input type="text" name="minimum_purchase_amount" placeholder="expirydate"
+                                            class="form-control form-control-lg" required
+                                            value="{{coupon.minimum_purchase_amount}}" />
+                                    </div>
+                                    <div style="color: black; text-align: left; margin-bottom: 1rem;">
+                                        <label class="form-label" for="form4Example1"></label>
+                                        <input type="text" name="maximum_uses" placeholder="expirydate"
+                                            class="form-control form-control-lg" required
+                                            value="{{coupon.maximum_uses}}" />
+                                    </div>
+
 
 
                                     <button class="btn btn-outline-success btn-lg px-5" type="submit">Submit</button>

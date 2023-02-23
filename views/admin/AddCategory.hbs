@@ -1,4 +1,4 @@
-
+{{!-- 
 
  <!DOCTYPE html>
 <html lang="en">
@@ -267,4 +267,727 @@ justify-content: center; width: 100vw;">
     <script src="/assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
   </body>
+</html> --}}
+{{!-- 
+
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BOLT </title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/assets/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+       <h2>BOLT</h2>
+        </div>
+        <ul class="nav">
+          <li class="nav-item profile">
+            <div class="profile-desc">
+              <div class="profile-pic">
+                <div class="count-indicator">
+                  <img class="img-xs rounded-circle " src="/assets/images/faces/face15.jpg" alt="">
+                  <span class="count bg-success"></span>
+                </div>
+                <div class="profile-name">
+                  <h5 class="mb-0 font-weight-normal">Admin</h5>
+                </div>
+              </div>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/home">
+              <span class="menu-icon">
+                <i class="mdi mdi-speedometer"></i>
+              </span>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+              <span class="menu-title">Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/admin/products">Products</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/admin/addproducts">Add Products</a></li>
+              </ul>
+            </div>
+          </li>
+              <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/addcategory">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title">Category</span>
+            </a>
+          </li>
+              <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/brand">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title">Brands</span>
+            </a>
+          </li>
+                <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/banner">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title">Banner</span>
+            </a>
+          </li>
+                 <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/coupon">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title">Coupen</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/orders">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title">Orders</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/admin/users">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+              <span class="menu-title">Users</span>
+            </a>
+          </li>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+         <header>
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar p-0 fixed-top d-flex flex-row">
+          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
+          </div>
+          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+              <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav w-100">
+              <li class="nav-item w-100">
+                <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                  <input type="text" class="form-control" placeholder="Search products">
+                </form>
+              </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+              <li class="nav-item dropdown">
+                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                  <div class="navbar-profile">
+                    <img class="img-xs rounded-circle" src="/assets/images/faces/face15.jpg" alt="">
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Admin</p>
+                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                  </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                  <h6 class="p-3 mb-0">Profile</h6>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item preview-item">
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-settings text-success"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Settings</p>
+                    </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item preview-item">
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-logout text-danger"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Log out</p>
+                    </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <p class="p-3 mb-0 text-center">Advanced settings</p>
+                </div>
+              </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+              <span class="mdi mdi-format-line-spacing"></span>
+            </button>
+          </div>
+        </nav>
+       </header>
+       <div>
+        <!-- partial -->
+        <section style="    display: flex;
+background-color: #dfdfdf;
+justify-content: center; ">
+    <table class="table table-stipped" style="margin: 5rem; margin-left: 0px; color: rgb(0, 0, 0); border: 2px solid; border-color: #2a272745; ">
+        <thead style="border: 2px solid; border-color: black;">
+          <tr style="background-color: white; color: white;">
+      <th scope="col-sm">NO</th>
+      <th scope="col-sm">Image</th>
+      <th scope="col-sm">Name</th>
+      <th scope="col-sm">Category</th>
+      <th scope="col-sm">Brand</th>
+      <th scope="col-sm">Stock</th>
+       <th scope="col-sm">Prize</th>128px
+        <th scope="col-sm">MRP</th>
+       <th scope="col-sm">Description</th>
+       <th scope="col-sm">Edit</th>
+      <th scope="col-sm">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {{#each productsdetail}}
+          <tr style="background-color: #ffffff; height: 3rem;" >
+             <th scope="row">1</th>
+      <td><img src="/photos/{{this.image.filename}}" alt="" style="width: 40px; height: 40px;"></td>
+      <td style="white-space:pre-wrap">{{this.productname}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.brand}}</td>
+      <td>{{this.quantity}}</td>
+      <td>{{this.prize}}</td>
+      <td >{{this.MRP}}</td>
+      <td style="white-space:pre-wrap">{{this.description}}</td>
+
+      
+        <td><a href="/admin/productedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+        <td>  {{#if this.block}}
+                <button
+                  onclick="if( confirm(' Are you sure to unblock product?')){window.location.href='/admin/unblockproduct/{{this._id}}' }"
+                  class="btn btn-success ">Unblock</button>
+                {{else}}
+                <button
+                  onclick="if( confirm(' Are you sure to block product?')){window.location.href='/admin/blockproduct/{{this._id}}' }"
+                  class="btn btn-danger ">Block</button>
+                {{/if}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</section>
+</div>
+{{!-- <table class="table">
+  <thead>
+    <tr>
+       <th scope="col">NO</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Brand</th>
+      <th scope="col">Stock</th>
+       <th scope="col">Prize</th>128px
+        <th scope="col">MRP</th>
+       <th scope="col">Description</th>
+       <th scope="col">Edit</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each productsdetail}}
+    <tr>
+ <th scope="row">1</th>
+      <td><img src="/photos/{{this.image.filename}}" alt="" style="width: 40px; height: 40px;"></td>
+      <td>{{this.productname}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.brand}}</td>
+      <td>{{this.quantity}}</td>
+      <td>{{this.prize}}</td>
+      <td >{{this.MRP}}</td>
+      <td>{{this.description}}</td>
+      
+        <td><a href="/admin/productedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+        <td>  {{#if this.block}}
+                <button
+                  onclick="if( confirm(' Are you sure to unblock product?')){window.location.href='/admin/unblockproduct/{{this._id}}' }"
+                  class="btn btn-success ">Unblock</button>
+                {{else}}
+                <button
+                  onclick="if( confirm(' Are you sure to block product?')){window.location.href='/admin/blockproduct/{{this._id}}' }"
+                  class="btn btn-danger ">Block</button>
+                {{/if}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table> --}}
+          <!-- content-wrapper ends -->
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="/assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+    <script src="/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/assets/js/off-canvas.js"></script>
+    <script src="/assets/js/hoverable-collapse.js"></script>
+    <script src="/assets/js/misc.js"></script>
+    <script src="/assets/js/settings.js"></script>
+    <script src="/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="/assets/js/dashboard.js"></script>
+    <!-- End custom js for this page -->
+  </body>
+</html> --}}
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/admincss/img/favicon.png" rel="icon">
+  <link href="/admincss/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/admincss/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/admincss/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/admincss/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/admincss/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/admincss/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/admincss/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/admincss/vendor/simple-datatables/style.css" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="/admincss/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.5.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="/admincss/img/logo.png" alt="">
+        <span class="d-none d-lg-block">NiceAdmin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn">A</i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul><!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+              <span>Web Designer</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/Home">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/products">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Products</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="tables-general.html">
+              <i class="bi bi-circle"></i><span>Product Details</span>
+            </a>
+          </li>
+          <li>
+            <a href="tables-data.html">
+              <i class="bi bi-circle"></i><span>Add products</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+      
+      <li class="nav-item">
+       <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/AddCategory">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/brand">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Brands</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/banner">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Banner</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/coupon">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Coupon</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/users">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="/admin/orders">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Orders</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+
+      
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main" style="height: 100vh;">
+    <form action="/admin/addcategory" method="post">
+               
+              <input type="text" name="newcategory" required placeholder="Category Name" style=" border: 3px solid rgb(141, 136, 136);">
+             
+              <li><button type="submit" class="btn btn-success" style="    margin-top: 16px;
+    margin-left: -22px;
+}">Add Category</button></li>
+             <p class="text-danger">{{msg}}</p>
+              </form>
+    <section class="section dashboard">
+      <table class="table" style="background-color: white; color: black;    margin-top: -67px; border: 1px solid rgb(141, 136, 136);">
+  <thead>
+    <tr>
+       <th scope="col">NO</th>
+      <th scope="col">Category</th>
+      <th scope="col">Edit</th>
+       <th scope="col">status</th>
+  </thead>
+  <tbody>
+     {{#each category}}
+    <tr style=" border: 1px solid rgb(141, 136, 136);">
+ <th scope="row">1</th>
+      <td>{{this.newcategories}}</td>
+     
+      <td><a href="/admin/categoryedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+        <td>  {{#if this.block}}
+                <button
+                  onclick="if( confirm(' Are you sure to unblock category?')){window.location.href='/admin/unblockcategory/{{this._id}}' }"
+                  class="btn btn-success ">Unblock</button>
+                {{else}}
+                <button
+                  onclick="if( confirm(' Are you sure to block category?')){window.location.href='/admin/blockcategory/{{this._id}}' }"
+                  class="btn btn-danger ">Block</button>
+                {{/if}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+      
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/admincss/js/main.js"></script>
+
+</body>
+
 </html>

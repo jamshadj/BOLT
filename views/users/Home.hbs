@@ -1,457 +1,616 @@
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
 
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion | Template</title>
 
-  <title>BOLT</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Poppins:400,600,700&display=swap" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="/assets2/css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="/assets2/css/responsive.css" rel="stylesheet" />
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/product-detail/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/style.css" type="text/css">
 </head>
 
 <body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header>
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container " style="width: 0px;">
-          <a class="navbar-brand" href="index.html">
-            <img src="../images/logo.png" alt="" style="width: 5rem;">
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon bg-light"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
-                <li class="nav-item active">
-                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="about.html"> Brands</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/productpage">Products </a>
-                </li>
-                <li class="nav-item" style="width: 10rem;">
-                  <a class="nav-link" href="contact.html">Contact us</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="contact.html">About</a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">
-                    <img src="../images/user.png" alt="" style="width: 1.5rem;">
-                  </a>
-                </li>
-              </ul>
-
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
-    <!-- slider section -->
-   <section class=" slider_section position-relative" style="background-color: black;">
-      <div class="design-box">
-        <img src="images/design-1.png" alt="">
-      </div>
-      <div class="slider_number-container d-none d-md-block">
-        <div class="number-box">
-          <span>
-            01
-          </span>
-          <hr>
-          <span class="jwel">
-             B<br>
-             O<br>
-             L<br>
-             T<br>
-          </span>
-          <hr>
-          <span>
-            02
-          </span>
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="/product-detail/img/logo.png" alt=""></a>
         </div>
-      </div>
-      <div class="container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">01</li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1">02</li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2">03</li>
-          </ol>
-          <div class="carousel-inner">
-            {{#each banner}}
-            <div class="carousel-item active">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="detail_box">
-                    <h2>
-                      <span style="color: white;"> New Collection</span>
-                      <hr>
-                    </h2>
-                    <h1 style="color: white; font-size: 3rem;">
-                     {{this.name}}
-                    </h1>
-                    <p  style="color: white;">
-                     {{this.description}}
-                    </p>
-                    <div style="color: white;">
-                      <a href="" >Shop Now</a>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header" style="position:relative;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="/product-detail/img/logo.png" alt=""></a>
                     </div>
-                  </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                     <img src="/photos/{{this.image.filename}}" alt="">
-                  </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li><a href="#">Women’s</a></li>
+                            <li><a href="#">Men’s</a></li>
+                            <li><a href="./shop.html">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="./product-details.html">Product Details</a></li>
+                                    <li><a href="./shop-cart.html">Shop Cart</a></li>
+                                    <li><a href="./checkout.html">Checkout</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
                 </div>
-              </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            <a href="#">Login</a>
+                            <a href="#">Register</a>
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="#"><span class="icon_heart_alt"></span>
+                                <div class="tip">2</div>
+                            </a></li>
+                            <li><a href="/cartpage"><span class="icon_bag_alt"></span>
+                                <div class="tip">2</div>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            {{/each}}
-           
-        
-          </div>
-        </div>
-      </div>
-
-    </section>
-    <!-- end slider section -->
-  </div>
-
-
-  <!-- about section -->
-
-  <section class="about_section layout_padding2-top layout_padding-bottom">
-    <div class="design-box">
-      <img src="images/design-2.png" alt="">
-    </div>
-    <div class="container">
-      <h2 style="text-align: center;">Upcoming</h2>
-      <div class="row">
-
-        <div class="col-md-6">
-          <div class="detail-box">
-            <div class="heading_container">
-              <h2>
-                About Jewellery Shop
-              </h2>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
             </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrudLorem ipsum dolor sit amet, consectetur
-              adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud
-            </p>
-            <div>
-              <a href="">
-                Read More
-              </a>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Categories Section Begin -->
+    <section class="categories">
+        <div class="container-fluid">
+            <div class="row">
+				{{#each banner}}
+                <div class="col-lg-12 p-0">
+                    <div class="categories__item categories__large__item set-bg"
+                    data-setbg="/photos/{{this.image.filename}}">
+                    <div class="categories__text">
+                        <h1>{{this.name}}</h1>
+                        <p>{{this.description}}</p>
+                        <a href="#">Shop now</a>
+                    </div>
+                </div>
+				{{/each}}
             </div>
-          </div>
         </div>
-        <div class="col-md-6">
-          <div class="img-box">
-            <img src="images/about-img.png" alt="">
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
+<!-- Categories Section End -->
 
-  <!-- end about section -->
-
-  <!-- price section -->
-
-  <section class="price_section layout_padding">
+<!-- Product Section Begin -->
+<section class="product spad">
     <div class="container">
-      <div class="heading_container" style="display: flex; justify-content: center;">
-        <h2>
-          Brands
-        </h2>
-      </div>
-
-      <div class="price_container">
-        {{#each brand}}
-        <div class="box">
-          <div class="name">
-            <h6>
-              {{this.newbrands}}
-            </h6>
-          </div>
-          <div class="img-box">
-            <img src="/photos/{{this.image.filename}}" alt="">
-          </div>
-          <div class="detail-box">
-            <a href="">
-              Explore
-            </a>
-          </div>
-        </div>
-        {{/each}}  
-
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <a href="" class="price_btn">
-          See More
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- end price section -->
-  <!-- produc section -->
-
-  <section class="price_section layout_padding" style="padding-bottom: 0px;">
-    <div class="container">
-      <div class="heading_container" style="display: flex; justify-content: center;">
-        <h2>
-          Products
-        </h2>
-      </div>
-      <div class="price_container">
-        {{#each product}}
-        <div class="box">
-          <div class="name">
-            <h6>
-              {{this.productname}}
-            </h6>
-          </div>
-          <div class="img-box">
-            <img src="/photos/{{this.image.filename}}" alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              $<span>{{this.prize}}</span>
-            </h5>
-            <a href="">
-              Explore
-            </a>
-          </div>
-        </div>
-        {{/each}}
-
-      </div>
-
-    </div>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <a href="" class="price_btn">
-        See More
-      </a>
-    </div>
-    </div>
-  </section>
-
-  <!-- product section -->
-  <!-- ring section -->
-
-  <section class="ring_section layout_padding">
-    <div class="design-box">
-      <img src="images/design-1.png" alt="">
-    </div>
-    <div class="container">
-      <div class="ring_container layout_padding2">
         <div class="row">
-          <div class="col-md-5">
-            <div class="detail-box">
-              <h4>
-                special
-              </h4>
-              <h2>
-                Wedding Ring
-              </h2>
-              <a href="">
-                Buy Now
-              </a>
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title">
+                    <h4>New product</h4>
+                </div>
             </div>
-          </div>
-          <div class="col-md-7">
-            <div class="img-box">
-              <img src="images/ring-img.jpg" alt="">
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end ring section -->
-
-  <!-- contact section -->
-
-  <section class="contact_section layout_padding">
-    <div class="design-box">
-      <img src="images/design-2.png" alt="">
-    </div>
-    <div class="container ">
-      <div class="">
-        <h2 class="">
-          Contact Us
-        </h2>
-      </div>
-
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <form action="">
-            <div>
-              <input type="text" placeholder="Name" />
+        <div class="row property__gallery">
+			{{#each product}}
+            <div class="col-lg-3 col-md-4 col-sm-6 mix women">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/photos/{{this.image.filename}}" style="    background-size: 100%;">
+                        <ul class="product__hover">
+                            <li><a href="/photos/{{this.image.filename}}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                            <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="#">{{this.productname}}</a></h6>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product__price">$ {{this.prize}}</div>
+                    </div>
+                </div>
             </div>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="text" placeholder="Phone" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Message" />
-            </div>
-            <div class="d-flex ">
-              <button>
-                SEND
-              </button>
-            </div>
-          </form>
+			{{/each}}
+			<div style="margin-left: auto; margin-right: auto;">
+				<a href="/productpage"><button>Explore more </button></a>
+			</div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
+<!-- Product Section End -->
 
-  <!-- end contact section -->
-
-  <!-- info section -->
-  <section class="info_section ">
+<!-- Banner Section Begin -->
+<section class="banner set-bg" data-setbg="/product-detail/img/banner/banner-1.jpg">
     <div class="container">
-      <div class="info_container">
         <div class="row">
-          <div class="col-md-3">
-            <div class="info_logo">
-              <a href="">
-                <img src="images/logo.ng" alt="">
-                <span>
-                  BOLT
-                </span>
-              </a>
+            <div class="col-xl-7 col-lg-8 m-auto">
+                <div class="banner__slider owl-carousel">
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="#">Shop now</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="#">Shop now</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="#">Shop now</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="info_contact">
-              <a href="">
-                <img src="images/location.png" alt="">
-                <span>
-                  Address
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="info_contact">
-              <a href="">
-                <img src="images/phone.png" alt="">
-                <span>
-                  +01 1234567890
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="info_contact">
-              <a href="">
-                <img src="images/mail.png" alt="">
-                <span>
-                  demo@gmail.com
-                </span>
-              </a>
-            </div>
-          </div>
         </div>
-        <div class="info_form">
-          <div class="d-flex justify-content-center">
-            <h5 class="info_heading">
-              Newsletter
-            </h5>
-          </div>
-          <form action="">
-            <div class="email_box">
-              <label for="email2">Enter Your Email</label>
-              <input type="text" id="email2">
-            </div>
-            <div>
-              <button>
-                subscribe
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="info_social">
-          <div class="d-flex justify-content-center">
-            <h5 class="info_heading">
-              Follow Us
-            </h5>
-          </div>
-          <div class="social_box">
-            <a href="">
-              <img src="images/fb.png" alt="">
-            </a>
-            <a href="">
-              <img src="public/images/twitter.png" alt="">
-            </a>
-            <a href="">
-              <img src="images/linkedin.png" alt="">
-            </a>
-            <a href="">
-              <img src="images/insta.png" alt="">
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
+<!-- Banner Section End -->
 
-  <!-- end info_section -->
+<!-- Trend Section Begin -->
+<section class="trend spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Hot Trend</h4>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/ht-1.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Chain bucket bag</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/ht-2.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Pendant earrings</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/ht-3.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Cotton T-Shirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Best seller</h4>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/bs-1.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Cotton T-Shirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/bs-2.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Zip-pockets pebbled tote <br />briefcase</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/bs-3.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Round leather bag</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Feature</h4>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/f-1.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Bow wrap skirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/f-2.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Metallic earrings</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="/product-detail/img/trend/f-3.jpg" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Flap cross-body bag</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Trend Section End -->
 
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; <span id="displayYear"></span> All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
-    </p>
-  </section>
-  <!-- footer section -->
+<!-- Discount Section Begin -->
+<section class="discount">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="discount__pic">
+                    <img src="/product-detail/img/discount.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="discount__text">
+                    <div class="discount__text__title">
+                        <span>Discount</span>
+                        <h2>Summer 2019</h2>
+                        <h5><span>Sale</span> 50%</h5>
+                    </div>
+                    <div class="discount__countdown" id="countdown-time">
+                        <div class="countdown__item">
+                            <span>22</span>
+                            <p>Days</p>
+                        </div>
+                        <div class="countdown__item">
+                            <span>18</span>
+                            <p>Hour</p>
+                        </div>
+                        <div class="countdown__item">
+                            <span>46</span>
+                            <p>Min</p>
+                        </div>
+                        <div class="countdown__item">
+                            <span>05</span>
+                            <p>Sec</p>
+                        </div>
+                    </div>
+                    <a href="#">Shop now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Discount Section End -->
 
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="text/javascript" src="js/custom.js"></script>
+<!-- Services Section Begin -->
+<section class="services spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-car"></i>
+                    <h6>Free Shipping</h6>
+                    <p>For all oder over $99</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-money"></i>
+                    <h6>Money Back Guarantee</h6>
+                    <p>If good have Problems</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-support"></i>
+                    <h6>Online Support 24/7</h6>
+                    <p>Dedicated support</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-headphones"></i>
+                    <h6>Payment Secure</h6>
+                    <p>100% secure payment</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services Section End -->
+
+<!-- Instagram Begin -->
+<div class="instagram">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-1.jpg">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-2.jpg">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-3.jpg">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-4.jpg">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-5.jpg">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-6.jpg">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Instagram End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-7">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="./index.html"><img src="/product-detail/img/logo.png" alt=""></a>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                    cilisis.</p>
+                    <div class="footer__payment">
+                        <a href="#"><img src="/product-detail/img/payment/payment-1.png" alt=""></a>
+                        <a href="#"><img src="/product-detail/img/payment/payment-2.png" alt=""></a>
+                        <a href="#"><img src="/product-detail/img/payment/payment-3.png" alt=""></a>
+                        <a href="#"><img src="/product-detail/img/payment/payment-4.png" alt=""></a>
+                        <a href="#"><img src="/product-detail/img/payment/payment-5.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-5">
+                <div class="footer__widget">
+                    <h6>Quick links</h6>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blogs</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4">
+                <div class="footer__widget">
+                    <h6>Account</h6>
+                    <ul>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Orders Tracking</a></li>
+                        <li><a href="#">Checkout</a></li>
+                        <li><a href="#">Wishlist</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-8 col-sm-8">
+                <div class="footer__newslatter">
+                    <h6>NEWSLETTER</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Email">
+                        <button type="submit" class="site-btn">Subscribe</button>
+                    </form>
+                    <div class="footer__social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                <div class="footer__copyright__text">
+                    <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                </div>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+
+<!-- Js Plugins -->
+<script src="/product-detail/js/jquery-3.3.1.min.js"></script>
+<script src="/product-detail/js/bootstrap.min.js"></script>
+<script src="/product-detail/js/jquery.magnific-popup.min.js"></script>
+<script src="/product-detail/js/jquery-ui.min.js"></script>
+<script src="/product-detail/js/mixitup.min.js"></script>
+<script src="/product-detail/js/jquery.countdown.min.js"></script>
+<script src="/product-detail/js/jquery.slicknav.js"></script>
+<script src="/product-detail/js/owl.carousel.min.js"></script>
+<script src="/product-detail/js/jquery.nicescroll.min.js"></script>
+<script src="/product-detail/js/main.js"></script>
 </body>
 
 </html>

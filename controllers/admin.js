@@ -123,7 +123,6 @@ const getProductEdit = async (req, res) => {
   }
   
 };
-
 const postProductEdit = async (req, res) => {
   const {
     productname,
@@ -136,9 +135,10 @@ const postProductEdit = async (req, res) => {
     _id,
   } = req.body;
 
-  if (req.files?.image && req.files?.subimage) {
-    let product = await productModel
-      .updateOne(
+  try {
+    let product;
+    if (req.files?.image && req.files?.subimage) {
+      product = await productModel.updateOne(
         { _id },
         {
           $set: {
@@ -153,13 +153,9 @@ const postProductEdit = async (req, res) => {
             subimage: req.files.subimage,
           },
         }
-      )
-      .lean();
-    return res.redirect("/admin/products");
-  }
-  if (!req.files?.image && req.files?.subimage) {
-    let product = await productModel
-      .updateOne(
+      );
+    } else if (!req.files?.image && req.files?.subimage) {
+      product = await productModel.updateOne(
         { _id },
         {
           $set: {
@@ -173,13 +169,9 @@ const postProductEdit = async (req, res) => {
             subimage: req.files.subimage,
           },
         }
-      )
-      .lean();
-    return res.redirect("/admin/products");
-  }
-  if (!req.files?.image && !req.files?.subimage) {
-    let product = await productModel
-      .updateOne(
+      );
+    } else if (!req.files?.image && !req.files?.subimage) {
+      product = await productModel.updateOne(
         { _id },
         {
           $set: {
@@ -192,13 +184,9 @@ const postProductEdit = async (req, res) => {
             description,
           },
         }
-      )
-      .lean();
-    return res.redirect("/admin/products");
-  }
-  if (req.files?.image && !req.files?.subimage) {
-    let product = await productModel
-      .updateOne(
+      );
+    } else if (req.files?.image && !req.files?.subimage) {
+      product = await productModel.updateOne(
         { _id },
         {
           $set: {
@@ -212,436 +200,499 @@ const postProductEdit = async (req, res) => {
             image: req.files.image[0],
           },
         }
-      )
-      .lean();
+      );
+    }
     return res.redirect("/admin/products");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal Server Error");
   }
 };
-
 //BLOCK PRODUCT
 const blockProduct = async (req, res) => {
-  let proid = req.params.id;
-  productModel.findByIdAndUpdate(
-    { _id: proid },
-    { $set: { block: true } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/products");
-      } else {
-        res.redirect("/admin/products");
-      }
-    }
-  );
+  try {
+    const proid = req.params.id;
+    await productModel.findByIdAndUpdate(
+      { _id: proid },
+      { $set: { block: true } }
+    );
+    res.redirect("/admin/products");
+  } catch (err) {
+    console.error(err);
+    res.redirect("/admin/products");
+  }
 };
 //unblock PRODUCT
 const unblockProduct = async (req, res) => {
-  let proid = req.params.id;
-  productModel.findByIdAndUpdate(
-    { _id: proid },
-    { $set: { block: false } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/products");
-      } else {
-        res.redirect("/admin/products");
-      }
-    }
-  );
+  try {
+    const proid = req.params.id;
+    await productModel.findByIdAndUpdate(
+      { _id: proid },
+      { $set: { block: false } }
+    );
+    res.redirect("/admin/products");
+  } catch (err) {
+    console.error(err);
+    res.redirect("/admin/products");
+  }
 };
+
 
 //ADD CATEGORY
 const getCategory = async (req, res) => {
-  let category = await categoryModel.find().lean();
-  if (req.session.admin) {
-    res.render("admin/AddCategory", { category,msg });
-  } else {
-    res.redirect('/admin')
+  try {
+    const category = await categoryModel.find().lean();
+    if (req.session.admin) {
+      res.render("admin/AddCategory", { category, msg });
+    } else {
+      res.redirect('/admin');
+    }
+  } catch (err) {
+    console.error(err);
+    const msg = "Sorry, there was an error";
+    res.render("admin/AddCategory", { category: [], msg });
   }
- 
 };
 
 const postAddCategory = async (req, res) => {
-  let block = false;
-  let existingCategories = await categoryModel.findOne({
-    newcategories: req.body.newcategories,
-  });
-  if (existingCategories) {
-    msg ="category is already added"
-   res.redirect('/admin/addcategory')
-  } else {
-    const { newcategories } = req.body;
-    let NewCategories = new categoryModel({ newcategories, block });
-    NewCategories.save((err, data) => {
-      if (err) { 
-        msg ="Sorry there is an error"
-        res.redirect('/admin/addcategory')
-      } else {
-        res.redirect("/admin/addcategory");
-      }
+  try {
+    const { newcategory } = req.body;
+    const categorycheck = newcategory.trim();
+    const existingCategories = await categoryModel.findOne({
+      newcategories: { $regex: new RegExp(`^${categorycheck}$`, 'i') }
     });
+
+    if (existingCategories) {
+       msg = "Category is already added";
+      res.redirect('/admin/AddCategory');
+    } else {
+      const NewCategories = new categoryModel({ newcategories: categorycheck, block: false });
+      await NewCategories.save();
+      res.redirect('/admin/AddCategory');
+    }
+  } catch (err) {
+    console.error(err);
+    const msg = "Sorry, there was an error";
+    res.render('admin/AddCategory', { msg });
   }
 };
 
 //BLOCK CATEGORY
 const blockCategory = async (req, res) => {
-  let proid = req.params.id;
-  categoryModel.findByIdAndUpdate(
-    { _id: proid },
-    { $set: { block: true } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/addcategory");
-      } else {
-        res.redirect("/admin/addcategory");
-      }
-    }
-  );
-};
-//unblock CATEGORY
-const unblockCategory = async (req, res) => {
-  let proid = req.params.id;
-  categoryModel.findByIdAndUpdate(
-    { _id: proid },
-    { $set: { block: false } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/addcategory");
-      } else {
-        res.redirect("/admin/addcategory");
-      }
-    }
-  );
+  try {
+    const proid = req.params.id;
+    await categoryModel.findByIdAndUpdate(
+      { _id: proid },
+      { $set: { block: true } }
+    );
+    res.redirect("/admin/addcategory");
+  } catch (err) {
+    res.redirect("/admin/addcategory");
+  }
 };
 
-//EDIT CATEGORY
-const getCategoryEdit = async (req, res) => {
-  let catId = req.params.id;
-  let category = await categoryModel.findOne({ _id: catId }).lean();
-  if (req.session.admin) {
-    res.render("admin/categoryEdit", { category });
-  } else {
-    res.redirect('/admin')
+const unblockCategory = async (req, res) => {
+  try {
+    const proid = req.params.id;
+    await categoryModel.findByIdAndUpdate(
+      { _id: proid },
+      { $set: { block: false } }
+    );
+    res.redirect("/admin/addcategory");
+  } catch (err) {
+    res.redirect("/admin/addcategory");
   }
-  
+};
+
+const getCategoryEdit = async (req, res) => {
+  try {
+    const catId = req.params.id;
+    const category = await categoryModel.findOne({ _id: catId }).lean();
+    if (req.session.admin) {
+      res.render("admin/categoryEdit", { category });
+    } else {
+      res.redirect('/admin');
+    }
+  } catch (err) {
+    console.error(err);
+    res.redirect('/admin/addcategory');
+  }
 };
 
 const postCategoryEdit = async (req, res) => {
-  const { newcategories, _id } = req.body;
-
-  await categoryModel
-    .findByIdAndUpdate(
+  try {
+    const { newcategories, _id } = req.body;
+    await categoryModel.findByIdAndUpdate(
       { _id },
-      {
-        $set: {
-          newcategories,
-        },
-      }
-    )
-    .lean();
-  res.redirect("/admin/Addcategory");
+      { $set: { newcategories } }
+    );
+    res.redirect("/admin/Addcategory");
+  } catch (err) {
+    console.error(err);
+    res.redirect('/admin/addcategory');
+  }
 };
 
 //BRAND
 const getBrand = async (req, res) => {
-  let brands = await brandModel.find().lean();
-  if (req.session.admin) {
-    res.render("admin/brand", { brands });
-  } else {
-    res.redirect('/admin')
+  try {
+    let brands = await brandModel.find().lean();
+    if (req.session.admin) {
+      res.render("admin/brand", { brands });
+    } else {
+      res.redirect('/admin')
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
   }
- 
 };
 
-//add brand
+const getAddBrand= (req,res)=>{
+  try {
+    if (req.session.admin) {
+      res.render('admin/addbrand',{msg})
+    } else {
+      res.redirect('/admin')
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 const postAddBrand = async (req, res) => {
-  let block = false;
-  let existingbrand = await brandModel.findOne({
-    newbrands: req.body.newbrands,
-  });
-  if (existingbrand) {
-    msg="Brand is already exist"
-    res.redirect('/admin/addbrand')
-  } else {
-    console.log('hi');
-    const { newbrands } = req.body;
-    let NewBrands = new brandModel({ newbrands, block,image:req.files.image[0],banner:req.files.banner[0]});
-    NewBrands.save((err, data) => {
-      if (err) {
-        console.log(err);
-        msg ="Error on adding product"
-        res.redirect('/admin/addbrand')
-      } else {
-        console.log("suces");
-        res.redirect("/admin/brand");
-      }
+  try {
+    let block = false;
+    const { brand } = req.body;
+    const brandcheck = brand.trim();
+    const existingBrand = await brandModel.findOne({
+      newbrands: { $regex: new RegExp(`^${brandcheck}$`, 'i') }
     });
+
+    if (existingBrand) {
+      console.log("Brand already exists");
+      res.redirect('/admin/addbrand');
+      return;
+    }
+
+    const newbrands = brandcheck;
+    let NewBrands = new brandModel({
+      newbrands,
+      block,
+      image: req.files.image[0],
+      banner: req.files.banner[0]
+    });
+    await NewBrands.save();
+    console.log("Success");
+    res.redirect("/admin/brand");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
   }
 };
+
 
 //BLOCK BRAND
 const blockBrand = async (req, res) => {
-  let braid = req.params.id;
-  brandModel.findByIdAndUpdate(
-    { _id: braid },
-    { $set: { block: true } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/brand");
-      } else {
-        res.redirect("/admin/brand");
-      }
-    }
-  );
+  try {
+    let braid = req.params.id;
+    await brandModel.findByIdAndUpdate(
+      { _id: braid },
+      { $set: { block: true } }
+    );
+    res.redirect("/admin/brand");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
-//unblock BRAND
+
 const unblockBrand = async (req, res) => {
-  let braid = req.params.id;
-  brandModel.findByIdAndUpdate(
-    { _id: braid },
-    { $set: { block: false } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/brand");
-      } else {
-        res.redirect("/admin/brand");
-      }
-    }
-  );
+  try {
+    let braid = req.params.id;
+    await brandModel.findByIdAndUpdate(
+      { _id: braid },
+      { $set: { block: false } }
+    );
+    res.redirect("/admin/brand");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
+
 //Edit brand
 const getBrandEdit = async (req, res) => {
-  let braId = req.params.id;
-  let brand = await brandModel.findOne({ _id: braId }).lean();
-  if (req.session.admin) {
-    res.render("admin/brandEdit", { brand });
-  } else {
-    res.redirect('/admin')
+  try {
+    let braId = req.params.id;
+    let brand = await brandModel.findOne({ _id: braId }).lean();
+    if (req.session.admin) {
+      res.render("admin/brandEdit", { brand });
+    } else {
+      res.redirect('/admin')
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
   }
-
 };
 
 const postBrandEdit = async (req, res) => {
-  const { newbrands, _id } = req.body;
+  try {
+    const { newbrands, _id } = req.body;
 
-  if (req.files?.image && req.files?.banner) {
-    let brand=await brandModel
-    .findByIdAndUpdate(
-      { _id },
-      {
-        $set: {
-          newbrands,
-          image: req.files.image[0],
-          banner: req.files.image[0],
-        },
-      }
-    )
-    .lean();
- return res.redirect("/admin/brand");
-  } else if (!req.files?.image && req.files?.banner) {
-    let brand=await brandModel
-    .findByIdAndUpdate(
-      { _id },
-      {
-        $set: {
-          newbrands,
-          banner: req.files.image[0],
-        },
-      }
-    )
-    .lean();
- return res.redirect("/admin/brand");
-  }else if (req.files?.image && !req.files?.banner) {
-    let brand=await brandModel
-    .findByIdAndUpdate(
-      { _id },
-      {
-        $set: {
-          newbrands,
-          image: req.files.image[0],
-        },
-      }
-    )
-    .lean();
- return res.redirect("/admin/brand");
+    if (req.files?.image && req.files?.banner) {
+      let brand=await brandModel
+      .findByIdAndUpdate(
+        { _id },
+        {
+          $set: {
+            newbrands,
+            image: req.files.image[0],
+            banner: req.files.image[0],
+          },
+        }
+      )
+      .lean();
+      return res.redirect("/admin/brand");
+    } else if (!req.files?.image && req.files?.banner) {
+      let brand=await brandModel
+      .findByIdAndUpdate(
+        { _id },
+        {
+          $set: {
+            newbrands,
+            banner: req.files.image[0],
+          },
+        }
+      )
+      .lean();
+      return res.redirect("/admin/brand");
+    } else if (req.files?.image && !req.files?.banner) {
+      let brand=await brandModel
+      .findByIdAndUpdate(
+        { _id },
+        {
+          $set: {
+            newbrands,
+            image: req.files.image[0],
+          },
+        }
+      )
+      .lean();
+      return res.redirect("/admin/brand");
+    } else {
+      let brand= await brandModel
+      .findByIdAndUpdate(
+        { _id },
+        {
+          $set: {
+            newbrands
+          },
+        }
+      )
+      .lean();
+      res.redirect("/admin/brand");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
   }
-   else {
-  
- let brand= await brandModel
-    .findByIdAndUpdate(
-      { _id },
-      {
-        $set: {
-          newbrands
-        },
-      }
-    )
-    .lean();
-  res.redirect("/admin/brand");
-  }
-}
+};
 
 
-const getAddBrand= (req,res)=>{
-  if (req.session.admin) {
-    res.render('admin/addbrand')
-  } else {
-    res.redirect('/admin')
-  }
- 
- 
-}
 
 //USER
 const getUsers = async (req, res) => {
-  let usersdetails = await usermodel.find().lean();
-  if (req.session.admin) {
-    res.render("admin/users", { usersdetails });
-  } else {
-    res.redirect("/admin")
+  try {
+    let usersdetails = await usermodel.find().lean();
+    if (req.session.admin) {
+      res.render("admin/users", { usersdetails });
+    } else {
+      res.redirect("/admin");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
   }
- 
 };
 
-//BLOCK USER
+// BLOCK USER
 const blockUser = async (req, res) => {
-  let UserId = req.params.id;
-  usermodel.findByIdAndUpdate(
-    { _id: UserId },
-    { $set: { block: true } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/users");
-      } else {
-        res.redirect("/admin/users");
-      }
-    }
-  );
+  try {
+    let UserId = req.params.id;
+    await usermodel.findByIdAndUpdate(
+      { _id: UserId },
+      { $set: { block: true } }
+    );
+    res.redirect("/admin/users");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 //unblock USER
 const unblockUser = async (req, res) => {
-  let braid = req.params.id;
-  usermodel.findByIdAndUpdate(
-    { _id: braid },
-    { $set: { block: false } },
-    function (err, data) {
-      if (err) {
-        res.redirect("/admin/users");
-      } else {
-        res.redirect("/admin/users");
-      }
-    }
-  );
+  try {
+    let braid = req.params.id;
+    await usermodel.findByIdAndUpdate(
+      { _id: braid },
+      { $set: { block: false } },
+    );
+    res.redirect("/admin/users");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 //BANNER
 const getBanner = async (req, res) => {
-  let banner = await bannerModel.find().lean();
-  if (req.session.admin) {
-    res.render("admin/banner", { banner });
-  } else {
-    res.redirect('/admin')
+  try {
+    let banner = await bannerModel.find().lean();
+    if (req.session.admin) {
+      res.render("admin/banner", { banner });
+    } else {
+      res.redirect('/admin');
+    }
+  } catch (err) {
+    console.error(err);
+    res.redirect('/admin');
   }
- 
 };
+
 const getAddBanner = (req, res) => {
   if (req.session.admin) {
     res.render("admin/Addbanner");
   } else {
-    res.redirect('/admin')
+    res.redirect('/admin');
   }
- 
 };
 
 const PostAddBanner = (req, res) => {
-  const { name, description } = req.body;
+  try {
+    const { name, description } = req.body;
 
-  let banner = new bannerModel({
-    name,
-    description,
-    image: req.file,
-  });
-  banner.save((err, data) => {
-    if (err) {
-      res.send("err" + err);
-    } else {
-      console.log("saved");
-      res.redirect("/admin/banner");
-    }
-  });
+    let banner = new bannerModel({
+      name,
+      description,
+      image: req.file,
+    });
+    banner.save((err, data) => {
+      if (err) {
+        console.log(err);
+        res.send("err" + err);
+      } else {
+        console.log("saved");
+        res.redirect("/admin/banner");
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.redirect('/admin');
+  }
 };
 
 const deleteBanner = async (req, res) => {
-  const banId = req.params.id;
-  console.log(banId);
-  await bannerModel.findByIdAndRemove({ _id: banId }).lean();
-  res.redirect("/admin/banner");
+  try {
+    const banId = req.params.id;
+    console.log(banId);
+    await bannerModel.findByIdAndRemove({ _id: banId }).lean();
+    res.redirect("/admin/banner");
+  } catch (err) {
+    console.error(err);
+    res.redirect('/admin');
+  }
 };
 
 //COUPON
 const getCoupon = async (req, res) => {
-  let coupon = await couponModel.find().lean();
-  if (req.session.admin) {
-    res.render("admin/coupon", { coupon });
-  } else {
-    res.redirect('/admin')
+  try {
+    let coupon = await couponModel.find().lean();
+    if (req.session.admin) {
+      res.render("admin/coupon", { coupon });
+    } else {
+      res.redirect('/admin')
+    }
+  } catch (err) {
+    res.status(500).send("Error retrieving coupons: " + err);
   }
- 
 };
+ 
 const getAddCoupon = (req, res) => {
   if (req.session.admin) {
     res.render("admin/addCoupon");
   } else {
     res.redirect("/admin")
   }
+};
  
-};
-//add coupon
+
 const postAddCoupon = async (req, res) => {
-  const { name, code } = req.body;
-  let coupon = await new couponModel({
-    name,
-    code,
-  });
-  coupon.save((err, date) => {
-    if (err) {
-      res.send("err" + err);
-    } else {
-      console.log("coupon saved");
-      res.redirect("/admin/coupon");
-    }
-  });
+  const {name, code, discount, expiration_date, minimum_purchase_amount, maximum_uses } = req.body;
+  try {
+    const coupon = new couponModel({
+      name,
+      code,
+      discount,
+      expiration_date,
+      minimum_purchase_amount,
+      maximum_uses
+    });
+    await coupon.save();
+    console.log("Coupon saved");
+    res.redirect("/admin/coupon");
+  } catch (err) {
+    res.status(500).send("Error saving coupon: " + err);
+  }
 };
+
 //edit coupon
 const getCouponEdit = async (req, res) => {
-  let copId = req.params.id;
-  let coupon = await couponModel.findOne({ _id: copId }).lean();
-  if (req.session.admin) {
-    res.render("admin/couponEdit", { coupon });
-  } else {
-    res.redirect("/admin")
+  try {
+    const copId = req.params.id;
+    const coupon = await couponModel.findOne({ _id: copId }).lean();
+    if (req.session.admin) {
+      res.render("admin/couponEdit", { coupon });
+    } else {
+      res.redirect("/admin")
+    }
+  } catch (err) {
+    res.status(500).send("Error retrieving coupon: " + err);
   }
- 
 };
 
 const postCouponEdit = async (req, res) => {
-  const { name, code, _id } = req.body;
-  await couponModel.findByIdAndUpdate(
-    { _id },
-    {
-      $set: {
-        name,
-        code,
-      },
-    }
-  );
-  res.redirect("/admin/coupon");
+  const { name, code, _id,discount,expiration_date,minimum_purchase_amount,maximum_uses} = req.body;
+  try {
+    await couponModel.findByIdAndUpdate(
+      { _id },
+      {
+        $set: {
+          name,
+          code,
+          discount,
+          expiration_date,
+          minimum_purchase_amount,
+          maximum_uses
+        },
+      }
+    );
+    res.redirect("/admin/coupon");
+  } catch (err) {
+    res.status(500).send("Error updating coupon: " + err);
+  }
 };
 
-//delete coupon
 const deleteCoupon = async (req, res) => {
-  const copId = req.params.id;
-  await couponModel.findByIdAndRemove({ _id: copId }).lean();
-  res.redirect("/admin/coupon");
+  try {
+    const copId = req.params.id;
+    await couponModel.findByIdAndRemove({ _id: copId }).lean();
+    res.redirect("/admin/coupon");
+  } catch (err) {
+    res.status(500).send("Error deleting coupon: " + err);
+  }
 };
 
 const orders = (req, res) => {
@@ -649,10 +700,8 @@ const orders = (req, res) => {
     res.render("admin/orders");
   } else {
     res.redirect('/admin')
-  }
-  
+  }  
 };
-
 module.exports = {
   getAdminLoginPage,postAdminLogin,
   getAdminHomePage,

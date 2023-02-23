@@ -17,6 +17,14 @@ const userschema= new mongoose.Schema({
         type: String,
           required:true
       },
+    cart:{
+      type:Array,
+      default:[]
+    },
+    address:{
+      type:Array,
+      default:[]
+    },
    
     block:{
         type:Boolean,

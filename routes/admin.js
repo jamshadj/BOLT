@@ -63,7 +63,7 @@ router.get('/addcategory', getCategory)
 router.get('/blockcategory/:id', blockCategory)
 router.get('/unblockcategory/:id', unblockCategory)
 router.get('/categoryedit/:id', getCategoryEdit)
-
+ 
 router.get('/brand', getBrand)
 router.get('/addbrand', getAddBrand)
 router.get('/blockbrand/:id', blockBrand)
@@ -76,11 +76,11 @@ router.get('/unblockuser/:id', unblockUser)
 
 router.get('/banner', getBanner)
 router.get('/addbanner', getAddBanner)
-router.get('/deletebanner/:id', deleteBanner)
+router.get('/deletebanner/:id', deleteBanner) 
 
 
 router.get('/coupon', getCoupon)
-router.get('/addcupon', getAddCoupon)
+router.get('/addcoupon', getAddCoupon)
 router.get('/couponedit/:id', getCouponEdit)
 router.get('/deletecoupon/:id', deleteCoupon)
 router.get('/orders', orders)
