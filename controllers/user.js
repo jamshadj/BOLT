@@ -348,21 +348,61 @@ const removeFromCart = async (req, res) => {
   );
   res.redirect("/cartpage");
 };
-
-const getUserCheckout= async (req, res) => {
+const getUserCheckout=async (req, res) => {
 
   const _id = req.session.user._id
-  console.log(_id);
 
   const users = await UserModel.findById({ _id }).lean()
-   res.render('users/checkout')
+  const address = users.address
+  const cart = users.cart
+  const cartQuantity = {}
+  const cartItems = cart.map((item) => {
+      cartQuantity[item.id] = item.quantity
+      return item.id;
+  })
+
+
+  const product = await productModel.find({ _id: { $in: cartItems } }).lean()
+  const products = product.map(item => {
+      return { ...item, quantity: cartQuantity[item._id] }
+  })
+  
+  let totalAmount = 0;
+  let coupons = await couponModel.find().lean()
+  let itemprize;
+  products.forEach((item, index) => {
+    const quantity = cartQuantity[item._id];
+    products[index].quantity = quantity;
+    totalAmount = totalAmount + item.prize * cartQuantity[item._id];
+    item.itemprize=item.prize*item.quantity
+  })
+ 
+  let coupon = req.session.coupon
+
+  let cashback = {}
+  if (coupon) {
+      if (totalAmount > coupon.minimum_purchase_amount) { 
+          cashback.discountedPrice = totalAmount-coupon.discount
+          cashback.discount = coupon.discount
+          console.log("coupon added"+cashback.discountedPrice+coupon.discount);
+      }
+  }
+
+  res.render('users/checkout', { products, totalAmount, address, cart, coupons, cashback,itemprize})
+  cashback = null
+  req.session.coupon = null
 }
 
-
-const getCouponCode=async(req,res)=>{
-let  couponCode=req.body.getCouponCode
-let coupon= await couponModel.find({code:couponCode}).lean()
-
+const postCouponCode = (req,res) => {
+  console.log("post coupon");
+    return new Promise((resolve, reject) => {
+      console.log("code"+req.body.couponcode);
+        couponModel.findOne({ code: req.body.couponcode }).then((coupon) => {
+            req.session.coupon = coupon;
+            res.redirect("/checkout");
+        });
+    });
+ 
 }
 
 module.exports = {
@@ -393,6 +433,6 @@ module.exports = {
   resendOTP,
   ForgotPasswordemil,
   postForgotPassword,
-  getCouponCode
+  postCouponCode
 };
 

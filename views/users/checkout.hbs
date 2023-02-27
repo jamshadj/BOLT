@@ -179,7 +179,7 @@
                                     <input type="text">
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" style="display: none;">
                                 <div class="checkout__form__checkbox">
                                     <label for="acc">
                                         Create an acount?
@@ -217,42 +217,44 @@
                                             <span class="top__text">Product</span>
                                             <span class="top__text__right">Total</span>
                                         </li>
-                                        <li>01. Chain buck bag <span>$ 300.0</span></li>
-                                        <li>02. Zip-pockets pebbled<br /> tote briefcase <span>$ 170.0</span></li>
-                                        <li>03. Black jean <span>$ 170.0</span></li>
-                                        <li>04. Cotton shirt <span>$ 110.0</span></li>
+        
+                                        {{#each products}}
+                                       
+                                        <li>{{this.productname}}<span>₹{{this.itemprize}}</span></li>
+                                        {{/each}}
                                     </ul>
                                 </div>
                                 <div class="checkout__order__total">
                                     <ul>
-                                        <li>Subtotal <span>$ 750.0</span></li>
-                                        <li>Total <span>$ 750.0</span></li>
+                                        <li>Subtotal <span style="color: black;">₹{{totalAmount}}</span></li>
+                                        <li>Total <span>₹{{ cashback.discountedPrice}}</span></li>
                                     </ul>
                                 </div>
                                 <div class="checkout__order__widget">
-                                    <label for="o-acc">
-                                        Create an acount?
-                                        <input type="checkbox" id="o-acc">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <p>Create am acount by entering the information below. If you are a returing customer
-                                    login at the top of the page.</p>
                                     <label for="check-payment">
-                                        Cheque payment
+                                        COD(cash on delivery)
                                         <input type="checkbox" id="check-payment">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="paypal">
-                                        PayPal
+                                       Online payment
                                         <input type="checkbox" id="paypal">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
                                 <button type="submit" class="site-btn">Place oder</button>
                             </div>
-                        </div>
                     </div>
                 </form>
+                <div class="col-lg-6">
+                    <div class="discount__content">
+                        <h6>Discount codes</h6>
+                        <form action="/applycoupon" method="post">
+                            <input type="text" placeholder="Enter your coupon code" name="couponcode" ><p>{{msg}}</p>
+                            <a href=""><button type="submit" class="site-btn">Apply</button></a>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- Checkout Section End -->

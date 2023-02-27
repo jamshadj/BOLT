@@ -10,7 +10,7 @@ const { getHomePage,
     ForgotPasswordemil, postForgotPassword,
     getAllProductPage,
     getProductDetail, addToCart, getCartPage,
-    removeFromCart, incrementQuantity, decrementQuantity, getUserCheckout,
+    removeFromCart, incrementQuantity, decrementQuantity, getUserCheckout,postCouponCode
 } = require('../controllers/user')
 
 router.get('/', getHomePage)
@@ -30,7 +30,7 @@ router.get('/cartpage', getCartPage)
 router.get('/removeFromCart/:id/:quantity', removeFromCart)
 router.get('/incrementQuantity/:id', incrementQuantity)
 router.get('/decrementQuantity/:id', decrementQuantity)
-
+router.post('/applycoupon',postCouponCode)
 
 router.get('/checkout', getUserCheckout)
 
