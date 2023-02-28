@@ -43,4 +43,4 @@ app.use('/',userRouters)
 
 
 //PORT 
-app.listen(8001,console.log('server started at port number 8001'))
+app.listen(8000,console.log('server started at port number 8000'))

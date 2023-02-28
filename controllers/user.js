@@ -7,6 +7,7 @@ const bannerModel = require("../models/bannerModel");
 const categoryModel = require("../models/categoryModel");
 const UserModel = require("../models/UserModel");
 const couponModel=require("../models/couponModel")
+const orderModel=require("../models/orderModel")
 var bcrypt = require("bcrypt");
 var salt = bcrypt.genSaltSync(10);
 
@@ -353,6 +354,7 @@ const getUserCheckout=async (req, res) => {
   const _id = req.session.user._id
 
   const users = await UserModel.findById({ _id }).lean()
+
   const address = users.address
   const cart = users.cart
   const cartQuantity = {}
@@ -361,7 +363,7 @@ const getUserCheckout=async (req, res) => {
       return item.id;
   })
 
-
+console.log("adress",address);
   const product = await productModel.find({ _id: { $in: cartItems } }).lean()
   const products = product.map(item => {
       return { ...item, quantity: cartQuantity[item._id] }
@@ -380,18 +382,48 @@ const getUserCheckout=async (req, res) => {
   let coupon = req.session.coupon
 
   let cashback = {}
+  console.log(totalAmount);
   if (coupon) {
       if (totalAmount > coupon.minimum_purchase_amount) { 
+        console.log(coupon.discount);
           cashback.discountedPrice = totalAmount-coupon.discount
           cashback.discount = coupon.discount
-          console.log("coupon added"+cashback.discountedPrice+coupon.discount);
+          console.log("coupon added="+cashback.discountedPrice);
       }
   }
 
-  res.render('users/checkout', { products, totalAmount, address, cart, coupons, cashback,itemprize})
+  res.render('users/checkout', { products, totalAmount, address, cart, coupon, cashback,itemprize})
   cashback = null
   req.session.coupon = null
 }
+
+
+const postUserCheckout = async (req, res) => {
+  const _id = req.session.user._id
+
+
+
+
+  const users = await UserModel.findById({ _id }).lean()
+
+  const cart = users.cart
+  const cartQuantity = {}
+  const cartItems = cart.map((item) => {
+      cartQuantity[item.id] = item.quantity
+      return item.id;
+  })
+
+  const product = await productModel.find({ _id: { $in: cartItems } }).lean()
+  const products = product.map(item => {
+    return { ...item, quantity: cartQuantity[item._id] }
+})
+console.log("Post checkout");
+console.log("users",users);
+console.log("product",product);
+console.log("quantity",cartQuantity);
+};
+ 
+
 
 const postCouponCode = (req,res) => {
   console.log("post coupon");
@@ -403,6 +435,41 @@ const postCouponCode = (req,res) => {
         });
     });
  
+}
+
+const getOrderConfirmed=(req,res)=>{
+  res.render('order-confirmed')
+}
+
+const getAddAddress=(req,res)=>{
+  res.render('users/add-New-Address')
+}
+const postAddAddress=async(req,res)=>{
+  const _id = req.session.user._id;
+  console.log("post checkout");
+  const {firstname, lastname, country,address, state, town, pincode, phonenumber, landmark} = req.body;
+
+  // Get the user from the database using the _id
+  const user = await UserModel.findById(_id);
+
+  // Set the address fields of the user document
+  user.address.push({
+    firstname: firstname,
+    lastname: lastname,
+    country: country,
+    address: address,
+    state: state,
+    town: town,
+    pincode: pincode,
+    phonenumber: phonenumber,
+    landmark: landmark
+  });
+
+  // Save the updated user document
+  await user.save();
+
+  // Send the response to the client
+  res.redirect('/checkout')
 }
 
 module.exports = {
@@ -419,6 +486,10 @@ module.exports = {
   removeFromCart,
   incrementQuantity,
   decrementQuantity,
+  postUserCheckout,
+  getOrderConfirmed,
+  getAddAddress,
+  postAddAddress,
   
   // Checkout
   getUserCheckout,
