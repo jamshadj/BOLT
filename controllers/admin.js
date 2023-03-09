@@ -6,6 +6,8 @@ const brandModel = require("../models/brandModel");
 const usermodel = require("../models/UserModel");
 const bannerModel = require("../models/bannerModel");
 const couponModel = require("../models/couponModel");
+const orderModel=require("../models/orderModel");
+const sharp = require("sharp");
 
 //ADMIN
 
@@ -78,10 +80,24 @@ const getAddProducts = async (req, res) => {
  
 };
 
-const postAddProducts = (req, res) => {
+
+const postAddProducts = async (req, res) => {
   let block = false;
-  const { productname, category, brand, quantity, prize, MRP, description } =
-    req.body;
+  const { productname, category, brand, quantity, prize, MRP, description } = req.body;
+    
+  await sharp(req.files.image[0].path)
+                .png()
+                .resize(250, 250, {
+                    kernel: sharp.kernel.nearest,
+                    fit: 'contain',   
+                    position: 'center',
+                    background: { r: 255, g: 255, b: 255, alpha: 0 }
+                })
+                .toFile(req.files.image[0].path + ".png")
+            req.files.image[0].filename = req.files.image[0].filename + ".png"
+            req.files.image[0].path = req.files.image[0].path + ".png"
+
+  
   let products = new productModel({
     productname,
     category,
@@ -91,7 +107,7 @@ const postAddProducts = (req, res) => {
     MRP,
     description,
     block,
-    image: req.files.image[0],
+    image:req.files.image[0],
     subimage: req.files.subimage,
   });
 
@@ -105,9 +121,9 @@ const postAddProducts = (req, res) => {
       res.redirect("/admin/products");
     }
   });
+}
 
- 
-};
+
 
 //EDIT PRODUCT
 const getProductEdit = async (req, res) => {
@@ -123,6 +139,9 @@ const getProductEdit = async (req, res) => {
   }
   
 };
+
+
+
 const postProductEdit = async (req, res) => {
   const {
     productname,
@@ -194,7 +213,7 @@ const postProductEdit = async (req, res) => {
             category,
             brand,
             quantity,
-            prize,
+            prize,  
             MRP,
             description,
             image: req.files.image[0],
@@ -208,6 +227,22 @@ const postProductEdit = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
+const deleteProductMainImage = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await productModel.findByIdAndUpdate(id, { $unset: { image: 1 } });
+    res.redirect("/admin/productedit/" + id);
+  } catch (err) {
+    console.error(err);
+    res.redirect("/admin/productedit/" + id);
+  }
+};
+
+const deleteProductSubImage=async(req,res)=>{
+
+}
+
 //BLOCK PRODUCT
 const blockProduct = async (req, res) => {
   try {
@@ -569,10 +604,15 @@ const getAddBanner = (req, res) => {
     res.redirect('/admin');
   }
 };
-
 const PostAddBanner = (req, res) => {
   try {
     const { name, description } = req.body;
+
+    // Validate image file type
+    if (req.file.mimetype !== 'image/jpeg' && req.file.mimetype !== 'image/png') {
+      throw new Error('Only JPEG and PNG images are allowed');
+    }
+
 
     let banner = new bannerModel({
       name,
@@ -694,14 +734,65 @@ const deleteCoupon = async (req, res) => {
     res.status(500).send("Error deleting coupon: " + err);
   }
 };
+   
+//order
 
-const orders = (req, res) => {
+const getOrdersPage =async (req, res) => {
+
   if (req.session.admin) {
-    res.render("admin/orders");
+    let orders=await orderModel.find().lean()
+    res.render("admin/orders",{orders});
   } else {
     res.redirect('/admin')
   }  
 };
+
+
+const getOrderStatusEdit = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const order = await orderModel.findById(orderId).lean();
+    const orderStatusOptions = orderModel.schema.path('orderStatus').enumValues;
+
+    res.render('admin/orderStatusEdit', {
+      order,
+      orderStatusOptions,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+};
+
+// const Order = require('../models/orderModel'); // import Order model
+
+const postOrderStatusEdit = async (req, res) => {
+  try {
+    const { orderStatus, _id } = req.body;
+
+    // find the order by id and update its status
+    const order = await orderModel.findByIdAndUpdate(
+      _id,
+      { orderStatus },
+      { new: true } // return the updated order
+    );
+
+
+    // redirect to the orders page
+    return res.redirect('/admin/orders');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Server error');
+  }
+};
+
+const adminLogout= async(req,res)=>{
+  req.session.destroy()
+  res.redirect('/admin')
+}
+
+
+
 module.exports = {
   getAdminLoginPage,postAdminLogin,
   getAdminHomePage,
@@ -710,12 +801,12 @@ module.exports = {
   getProductsPage, 
   getAddProducts,postAddProducts, 
   getProductEdit,postProductEdit, 
-  blockProduct,unblockProduct,
+  blockProduct,unblockProduct,deleteProductMainImage,
 
   //category
   getCategory,postAddCategory,
   blockCategory,unblockCategory,
-  getCategoryEdit,postCategoryEdit,
+  getCategoryEdit,postCategoryEdit,adminLogout,
  
   //brand
   getBrand,
@@ -736,9 +827,9 @@ module.exports = {
   getCoupon,
   getAddCoupon,postAddCoupon,
   getCouponEdit,postCouponEdit,
-  deleteCoupon,
+  deleteCoupon,deleteProductSubImage,
 
-  
-  
-  orders, 
+
+  //order
+  getOrdersPage,getOrderStatusEdit,postOrderStatusEdit
 };

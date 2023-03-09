@@ -1,108 +1,100 @@
 const express = require('express');
 const router = express.Router();
-
-
 const {
-      getAdminLoginPage, postAdminLogin,
-      getAdminHomePage,
-
-      //product
-      getProductsPage,
-      getAddProducts, postAddProducts,
-      getProductEdit, postProductEdit,
-      blockProduct, unblockProduct,
-
-      //category
-      getCategory, postAddCategory,
+      // authentication
+      getAdminLoginPage, postAdminLogin, getAdminHomePage,adminLogout,
+    
+      // product
+      getProductsPage, getAddProducts, postAddProducts, getProductEdit, 
+      postProductEdit, blockProduct, unblockProduct,deleteProductMainImage,
+    
+      // category
+      getCategory, postAddCategory, getCategoryEdit, postCategoryEdit,
       blockCategory, unblockCategory,
-      getCategoryEdit, postCategoryEdit,
-
-      //brand
-      getBrand,
-      getAddBrand, postAddBrand,
+    
+      // brand
+      getBrand, getAddBrand, postAddBrand, getBrandEdit, postBrandEdit,
       blockBrand, unblockBrand,
-      getBrandEdit, postBrandEdit,
-
-      //user
-      getUsers,
-      blockUser, unblockUser,
-
-      //banner
-      getBanner,
-      getAddBanner, PostAddBanner,
-      deleteBanner,
-
-      //coupon
-      getCoupon,
-      getAddCoupon, postAddCoupon,
-      getCouponEdit, postCouponEdit,
-      deleteCoupon,
-
-
-
-      orders,
-
-
-
-} = require('../controllers/admin');
+    
+      // user
+      getUsers, blockUser, unblockUser,
+    
+      // banner
+      getBanner, getAddBanner, PostAddBanner, deleteBanner,
+    
+      // coupon
+      getCoupon, getAddCoupon, postAddCoupon, getCouponEdit, 
+      postCouponEdit, deleteCoupon,
+    
+      // orders
+      getOrdersPage, getOrderStatusEdit, postOrderStatusEdit
+    
+      
+    } = require('../controllers/admin');
+    
 const verifyAdmin = require('../middlewares/adminSession');
 const upload = require('../middlewares/multer');
 
 
 //ROUTER SETTING
-router.get('/', getAdminLoginPage)
-router.get('/home', getAdminHomePage)
 
-router.get('/products', getProductsPage)
-router.get('/addproducts', getAddProducts)
-router.get('/productedit/:id', getProductEdit)
-router.get('/blockproduct/:id', blockProduct)
-router.get('/unblockproduct/:id', unblockProduct)
-
-router.get('/addcategory', getCategory)
-router.get('/blockcategory/:id', blockCategory)
-router.get('/unblockcategory/:id', unblockCategory)
-router.get('/categoryedit/:id', getCategoryEdit)
- 
-router.get('/brand', getBrand)
-router.get('/addbrand', getAddBrand)
-router.get('/blockbrand/:id', blockBrand)
-router.get('/unblockbrand/:id', unblockBrand)
-router.get('/brandedit/:id', getBrandEdit)
-
-router.get('/users', getUsers)
-router.get('/blockuser/:id', blockUser)
-router.get('/unblockuser/:id', unblockUser)
-
-router.get('/banner', getBanner)
-router.get('/addbanner', getAddBanner)
-router.get('/deletebanner/:id', deleteBanner) 
-
-
-router.get('/coupon', getCoupon)
-router.get('/addcoupon', getAddCoupon)
-router.get('/couponedit/:id', getCouponEdit)
-router.get('/deletecoupon/:id', deleteCoupon)
-router.get('/orders', orders)
-
-
-
-
-
-
-
-
-
+// Admin Routes
+router.get('/', getAdminLoginPage);
+router.get('/home', getAdminHomePage);
 router.post('/adminlogin', postAdminLogin)
-router.post('/addproducts', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'subimage', maxCount: 3 }]), postAddProducts)
-router.post('/productedit', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'subimage', maxCount: 3 }]), postProductEdit)
-router.post('/addcategory', postAddCategory)
-router.post('/categoryedit', postCategoryEdit)
-router.post('/addbrand', upload.fields([{ name: 'image' }, { name: 'banner'}]), postAddBrand)
-router.post('/brandedit', upload.fields([{ name: 'image' }, { name: 'banner'}]), postBrandEdit)
-router.post('/addbanner', upload.single('image'), PostAddBanner)
-router.post('/addcoupon', postAddCoupon)
-router.post('/couponedit', postCouponEdit)
+router.get('/logout', adminLogout);
+
+// Product Routes
+router.get('/products', getProductsPage);
+router.get('/addproducts', getAddProducts);
+router.post('/addproducts', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'subimage', maxCount: 3 }]), postAddProducts);
+router.get('/productedit/:id', getProductEdit);
+router.post('/productedit', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'subimage', maxCount: 3 }]), postProductEdit);
+router.get('/blockproduct/:id', blockProduct);
+router.get('/unblockproduct/:id', unblockProduct);
+router.get('/deleteimage/:id', deleteProductMainImage);
+
+// Category Routes
+router.get('/addcategory', getCategory);
+router.post('/addcategory', postAddCategory);
+router.get('/blockcategory/:id', blockCategory);
+router.get('/unblockcategory/:id', unblockCategory);
+router.get('/categoryedit/:id', getCategoryEdit);
+router.post('/categoryedit', postCategoryEdit);
+
+// Brand Routes
+router.get('/brand', getBrand);
+router.get('/addbrand', getAddBrand);
+router.post('/addbrand', upload.fields([{ name: 'image' }, { name: 'banner'}]), postAddBrand);
+router.get('/blockbrand/:id', blockBrand);
+router.get('/unblockbrand/:id', unblockBrand);
+router.get('/brandedit/:id', getBrandEdit);
+router.post('/brandedit', upload.fields([{ name: 'image' }, { name: 'banner'}]), postBrandEdit);
+
+// User Routes
+router.get('/users', getUsers);
+router.get('/blockuser/:id', blockUser);
+router.get('/unblockuser/:id', unblockUser);
+
+// Banner Routes
+router.get('/banner', getBanner);
+router.get('/addbanner', getAddBanner);
+router.post('/addbanner', upload.single('image'), PostAddBanner);
+router.get('/deletebanner/:id', deleteBanner);
+
+// Coupon Routes
+router.get('/coupon', getCoupon);
+router.get('/addcoupon', getAddCoupon);
+router.post('/addcoupon', postAddCoupon);
+router.get('/couponedit/:id', getCouponEdit);
+router.post('/couponedit', postCouponEdit);
+router.get('/deletecoupon/:id', deleteCoupon);
+
+// Order Routes
+router.get('/orders', getOrdersPage);
+router.get('/orderStatus/:id', getOrderStatusEdit);
+router.post('/orderStatus', postOrderStatusEdit);
+
 
 router.use(verifyAdmin)
 

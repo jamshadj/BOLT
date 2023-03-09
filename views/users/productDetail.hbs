@@ -51,41 +51,46 @@
     <!-- Offcanvas Menu End -->
 
     <!-- Header Section Begin -->
-    <header class="header">
+    <header class="header" style="position:relative;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="/product-detail/img/logo.png" alt=""></a>
+                        <a href="./index.html"><img src="/product-detail/img/logo.png" style="width: 22%;" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
-                            <li class="active"><a href="./shop.html">Shop</a></li>
-							<li class=""><a href="">Products</a></li>
-                            <li><a href="#">Brands</a>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="/productpage">Shop</a></li>
+                            <li><a href="/productpage">Products</a>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="">Blog</a></li>
+                            <li><a href="">Contact</a></li>
+                             <li><a href="/cart">Cart</a></li>
+                              <li><a href="/wish-list">Wishlist</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
-                            <a href="#">Register</a>
+                            {{#if user}}
+                            <a href="/profile">{{user.name}}</a>
+                            {{else}}
+                            <a href="/login">Login</a>
+                            <a href="/signup">Register</a>
+                            {{/if}}
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="#"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
+                            <li><a href="/wish-list"><span class="icon_heart_alt"></span>
+                                    {{!-- <div class="tip">2</div> --}}
+                                </a></li>
                             <li><a href="/cartpage"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
+                                    {{!-- <div class="tip">2</div> --}}
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -95,8 +100,6 @@
             </div>
         </div>
     </header>
-    <!-- Header Section End -->
-
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container" style="margin-top: 13px;">
@@ -104,6 +107,7 @@
                 <div class="col-lg-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__left product__thumb nice-scroll">
+                            
                             <a class="pt active" href="#product-1">
                                 <img src="/photos/{{product.image.filename}}" alt="" >
                             </a>
@@ -117,18 +121,21 @@
                                  <img src="/photos/{{product.subimage.[2].filename}}" alt="">
                             </a>
                         </div>
-                        <div class="product__details__slider__content" >
-                            <div class="product__details__pic__slider owl-carousel">
-                                <img data-hash="product-1" class="product__big__img" src="/photos/{{product.image.filename}}" alt="" >
-                                <img data-hash="product-2" class="product__big__img" src="/photos/{{product.subimage.[0].filename}}" alt="" style="width: 80%;">
-                                <img data-hash="product-3" class="product__big__img" src="/photos/{{product.subimage.[1].filename}}" alt="" style="width: 80%;">
-                                <img data-hash="product-4" class="product__big__img" src="/photos/{{product.subimage.[2].filename}}" alt="" style="width: 80%;">
-                            </div>
-                        </div>
+                      <div class="product__details__slider__content">
+  <div class="product__details__pic__slider owl-carousel">
+    <div class="wrap-pic-w pos-relative" id="image-zoom" style="z-index: 10;">
+      <img src="/photos/{{product.image.filename}}" alt="IMG-PRODUCT">
+    </div>
+    {{!-- <img data-hash="product-1" class="product__big__img" src="/photos/{{product.image.filename}}" alt="" style="width: 80%; margin: auto; margin-top: 2rem;"> --}}
+    <img data-hash="product-2" class="product__big__img" src="/photos/{{product.subimage.[0].filename}}" alt="" style="width: 80%; margin: auto; margin-top: 2rem;">
+    <img data-hash="product-3" class="product__big__img" src="/photos/{{product.subimage.[1].filename}}" alt="" style="width: 80%; margin: auto; margin-top: 2rem;">
+    <img data-hash="product-4" class="product__big__img" src="/photos/{{product.subimage.[2].filename}}" alt="" style="width: 80%; margin: auto; margin-top: 2rem;">
+  </div>
+</div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="product__details__text">
+                    <div class="product__details__text" style="margin-top: 2rem;">
                         <h3>{{product.productname}} <span>Brand:{{product.brand}}</span></h3>
                         <div class="rating">
                             <i class="fa fa-star"></i>
@@ -138,13 +145,19 @@
                             <i class="fa fa-star"></i>
                             <span>( 138 reviews )</span>
                         </div>
-                        <div class="product__details__price">${{product.prize}} <span>${{product.MRP}}</span></div>
+                        <div class="product__details__price">${{product.prize}} <span>₹{{product.MRP}}</span></div>
                         <p>{{product.description}}</p>
-                        <div class="product__details__button">
-                         
-                            <a href="/addtocart/{{product._id}}" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
+                        
+                           
+
+                         {{#if noQuantity}}
+                         <p class="text-danger">Sorry no items left</p>
+                         {{else if lowQuantity}}
+                         <div class="product__details__button"
+                         <p class="text-danger">Hurry only few left</p>
+                            <a href="/addtocart/{{product._id}}" class="cart-btn"><span class="icon_bag_alt"></span>Add to cart</a>
                             <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="/addtowishlist/{{product._id}}"><span class="icon_heart_alt"></span></a></li>
                                 <li><a><span class="icon_adjust-horiz"></span></a></li>
                             </ul>
                         </div>
@@ -153,9 +166,8 @@
                                 <li>
                                     <span>Availability:</span>
                                     <div class="stock__checkbox">
-                                        <label for="stockin">
-                                            In Stock
-                                            
+                                        <label for="stockin" >
+                                            Only few left
                                         </label>             
                                     </div>
                                 </li>
@@ -165,6 +177,32 @@
                                 </li>
                             </ul>
                         </div>
+                        {{else}}
+                        <div class="product__details__button">
+                         <a href="/addtocart/{{product._id}}" class="cart-btn"><span class="icon_bag_alt"></span>Add to cart</a>
+                            <ul>
+                                <li><a href="/addtowishlist/{{product._id}}"><span class="icon_heart_alt"></span></a></li>
+                                <li><a><span class="icon_adjust-horiz"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__details__widget">
+                            <ul>
+                                <li>
+                                    <span>Availability:</span>
+                                    <div class="stock__checkbox">
+                                        <label for="stockin" >
+                                            In stock
+                                        </label>             
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Promotions:</span>
+                                    <p>Free shipping</p>
+                                </li>
+                            </ul>
+                        </div>
+                        {{/if}}
+
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -173,19 +211,19 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
                             </li>
-                            <li class="nav-item">
+                            {{!-- <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
-                            </li>
+                            </li> --}}
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <h6>Description</h6>
                                 <p>{{product.description}}</p>
                             </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            {{!-- <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <h6>Specification</h6>
                                 <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
                                     quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
@@ -210,7 +248,7 @@
                                     dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
                                     nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
                                 quis, sem.</p>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -233,7 +271,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">Buttons tweed blazer</a></h6>
+                            <h6><a href="#">{{this.productname}}</a></h6>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -241,7 +279,7 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                             </div>
-                            <div class="product__price">$ 59.0</div>
+                            <div class="product__price">₹ {{this.prize}}</div>
                         </div>
                     </div>
                 </div>
@@ -257,50 +295,50 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="/images/1.jpg">
+                    <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-1.jpg">
                         <div class="instagram__text">
                             <i class="fa fa-instagram"></i>
-                            <a href="#">@Bolt</a>
+                            <a href="#">@ ashion_shop</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="/images/2.jpg">
+                    <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-2.jpg">
                         <div class="instagram__text">
                             <i class="fa fa-instagram"></i>
-                            <a href="#">@Bolt</a>
+                            <a href="#">@ ashion_shop</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="/images/3.jpg">
+                    <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-3.jpg">
                         <div class="instagram__text">
                             <i class="fa fa-instagram"></i>
-                            <a href="#">@Bolt</a>
+                            <a href="#">@ ashion_shop</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="/images/5.jpg">
+                    <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-4.jpg">
                         <div class="instagram__text">
                             <i class="fa fa-instagram"></i>
-                            <a href="#">@Bolt</a>
+                            <a href="#">@ ashion_shop</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="/images/6.jpg">
+                    <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-5.jpg">
                         <div class="instagram__text">
                             <i class="fa fa-instagram"></i>
-                            <a href="#">@Bolt</a>
+                            <a href="#">@ ashion_shop</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                    <div class="instagram__item set-bg" data-setbg="/images/1.jpg">
+                    <div class="instagram__item set-bg" data-setbg="/product-detail/img/instagram/insta-6.jpg">
                         <div class="instagram__text">
                             <i class="fa fa-instagram"></i>
-                            <a href="#">@Bolt</a>
+                            <a href="#">@ ashion_shop</a>
                         </div>
                     </div>
                 </div>
@@ -372,7 +410,7 @@
                 <div class="col-lg-12">
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     <div class="footer__copyright__text">
-                        <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                        <p>Copyright &copy; <scrip>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
                     </div>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
@@ -391,7 +429,19 @@
         </div>
     </div>
     <!-- Search End -->
+  <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js"></script>
+<script>
+  var options = {
+    width: 500,
+    height: 550,
+    zoomWidth: 400,
+    offset: { vertical: 0, horizontal: 10 },
+    scale: 0.7
+  };
 
+  var img = document.getElementById("image-zoom");
+  new ImageZoom(img, options);
+</script>
     <!-- Js Plugins -->
     <script src="/product-detail/js/jquery-3.3.1.min.js"></script>
     <script src="/product-detail/js/bootstrap.min.js"></script>
@@ -403,6 +453,19 @@
     <script src="/product-detail/js/owl.carousel.min.js"></script>
     <script src="/product-detail/js/jquery.nicescroll.min.js"></script>
     <script src="/product-detail/js/main.js"></script>
+    <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js"></script>
+    <script>
+        var options = {
+            width: 500,
+            height: 550,
+            zoomWidth: 400,
+            offset: { vertical: 0, horizontal: 10 },
+            scale: 0.7
+        };
+
+        var img = document.getElementById("image-zoom");
+        new ImageZoom(img, options);
+    </script>
 </body>
 
 </html>

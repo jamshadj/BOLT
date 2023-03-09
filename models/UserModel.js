@@ -14,13 +14,17 @@ const userschema= new mongoose.Schema({
           required:true
       },
     password :{
-        type: String,
-          required:true
-      },
-    cart:{
-      type:Array,
-      default:[]
+      type: String,
+        required:true
     },
+  cart:{
+    type:Array,
+    default:[]
+  },
+  wishlist:{
+    type:Array,
+    default:[]
+  },
     address:{
       type:Array,
       default:[]
