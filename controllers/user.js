@@ -894,12 +894,18 @@ const postSearchProduct = async (req, res) => {
 
 //profile  
 
-const getProfile=async(req,res)=>{
-  const user=req.session.user
-
-  const address=await UserModel.findOne({_id:user._id},{address:1,_id:0})
-  res.render('users/profile',{user,address})
-}
+const getProfile = async (req, res) => {
+  try {
+    const userId = req.session.user._id;
+    const user = await UserModel.findById(userId).lean()
+    const address = user.address;
+    res.render('users/profile', { user, address });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+  
+};     
 
 //order history
 const getOrderHistory = async (req, res) => {
@@ -908,6 +914,17 @@ const getOrderHistory = async (req, res) => {
   res.render('users/ordersHistory', { user, orders });
 }
        
+   
+const getOrders=async (req,res)=>{
+  const proId=req.params.id
+  console.log(proId);
+  const orderDetails=await orderModel.find({"orderItems._id":proId}).lean()
+  console.log(orderDetails);
+  res.render('users/order-History-View', { orderDetails });
+
+}
+
+
 
 module.exports = {      
   // Home page
@@ -960,5 +977,6 @@ module.exports = {
 
   //profile
 
-  getProfile,getOrderHistory,userLogout
+  getProfile,getOrderHistory,userLogout,
+  getOrders 
 }

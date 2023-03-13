@@ -16,7 +16,8 @@ const { getHomePage,
     getOrderHistory,
     userLogout,
     getEditAddress,
-    postEditAddress
+    postEditAddress,
+    getOrders
 } = require('../controllers/user')
 
 router.get('/', getHomePage)
@@ -27,7 +28,7 @@ router.get('/resend', resendOTP)
 router.get('/forgot', ForgotPasswordemil)
 router.get('/add-new-address',getAddAddress)
 
-// router.use(checkUser) 
+// router.use(checkUser)  
 router.use(checkUser)
 router.get('/productpage', getAllProductPage)
 router.get('/product/:id', getProductDetail)
@@ -67,5 +68,8 @@ router.post('/edit-address',postEditAddress)
 
 router.get('/order-history',getOrderHistory)
 router.get('/logout',userLogout)
+
+//order history
+router.get('/orders/:id',getOrders)
 
 module.exports = router    

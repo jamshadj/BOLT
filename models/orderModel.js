@@ -16,6 +16,8 @@ const orderSchema = new mongoose.Schema(
         image: { type: String, required: true },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
+        status:{ type:String,  enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
+        default: 'pending',}
       },
     ],
     shippingAddress: {
@@ -41,7 +43,7 @@ const orderSchema = new mongoose.Schema(
     date:{
       type:Date,
       required:true,
-    },
+    },  
     orderStatus: {
       type: String,
       enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/product-detail/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/product-detail/css/style.css" type="text/css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                    <div class="tip">2</div>
+                </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                    <div class="tip">2</div>
+                </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="/product-detail/img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header" style="position:relative;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="/product-detail/img/logo.png" style="width: 22%;" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="/order-history">Orders</a></li>
+                            <li><a href="/productpage">Products</a>
+                            <li><a href="/profile">Profile</a>
+
+                            <li><a href="">Blog</a></li>
+                            <li><a href="">Contact</a></li>
+                            <li><a href="/cart">Cart</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            {{#if user}}
+                            <a href="/profile">{{user.name}}</a>
+                            {{else}}
+                            <a href="/login">Login</a>
+                            <a href="/signup">Register</a>
+                            {{/if}}
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="/wish-list"><span class="icon_heart_alt"></span>
+                                    {{!-- <div class="tip">2</div> --}}
+                                </a></li>
+                            <li><a href="/cartpage"><span class="icon_bag_alt"></span>
+                                    {{!-- <div class="tip">2</div> --}}
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+ <section class="product-details spad">
+    <div class="container" style="margin-top: 13px;">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product__details__pic">
+                    <div class="product__details__slider__content">
+                        <div class="product__details__pic__slider owl-carousel">
+                            <div class="wrap-pic-w pos-relative" id="image-zoom" style="z-index: 10;">
+                                <img src="/images/5.jpg" alt="IMG-PRODUCT">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product__details__text" style="margin-top: 2rem;">
+                        <h6>Order ID: <span>{{orderDetails._id}}</span></h6>
+                        <h3> {{orderDetails.[0].orderItems.name}} <span>Brand: {{orderDetails.[0].orderItems.brand}}</span></h3>
+                        <h3><span>Quantity: {{orderDetails.[0].orderItems.quantity}}</span></h3>
+                        <div class="product__price">₹ {{orderDetails.[0].orderItems.price}}</div>
+                        <h6 style="margin: 10px;">Shipping Address: <span>{{orderDetails.[0].shippingAddress}}</span></h6>
+                        <h6 style="margin: 10px;">Ordered Date: <span>{{orderDetails.[0].orderedDate}}</span></h6>
+                        <div class="product__details__button">
+                            <a href="/addtocart/{{orderDetails.[0].orderItems._id}}" class="cart-btn"><span class="icon_bag_alt"></span>Add to cart</a>
+                            <ul></ul>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                       
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
+                        </li>
+                        {{!-- <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
+                        </li> --}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Search Begin -->
+    <div class=" search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form" action="/search-product" method="post">
+                <input type="text" id="search-input" placeholder="Search here....." name="name">
+            </form>
+        </div>
+    </div>
+
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="/product-detail/js/jquery-3.3.1.min.js"></script>
+    <script src="/product-detail/js/bootstrap.min.js"></script>
+    <script src="/product-detail/js/jquery.magnific-popup.min.js"></script>
+    <script src="/product-detail/js/jquery-ui.min.js"></script>
+    <script src="/product-detail/js/mixitup.min.js"></script>
+    <script src="/product-detail/js/jquery.countdown.min.js"></script>
+    <script src="/product-detail/js/jquery.slicknav.js"></script>
+    <script src="/product-detail/js/owl.carousel.min.js"></script>
+    <script src="/product-detail/js/jquery.nicescroll.min.js"></script>
+    <script src="/product-detail/js/main.js"></script>
+</body>
+
+</html>

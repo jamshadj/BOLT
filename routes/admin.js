@@ -27,7 +27,7 @@ const {
       postCouponEdit, deleteCoupon,
     
       // orders
-      getOrdersPage, getOrderStatusEdit, postOrderStatusEdit
+      getOrdersPage, getOrderStatusEdit, postOrderStatusEdit, getAdminSalesReport, getAdminDashboard
     
       
     } = require('../controllers/admin');
@@ -40,7 +40,7 @@ const upload = require('../middlewares/multer');
 
 // Admin Routes
 router.get('/', getAdminLoginPage);
-router.get('/home', getAdminHomePage);
+router.get('/home', getAdminDashboard);
 router.post('/adminlogin', postAdminLogin)
 router.get('/logout', adminLogout);
 
@@ -60,8 +60,8 @@ router.post('/addcategory', postAddCategory);
 router.get('/blockcategory/:id', blockCategory);
 router.get('/unblockcategory/:id', unblockCategory);
 router.get('/categoryedit/:id', getCategoryEdit);
-router.post('/categoryedit', postCategoryEdit);
 
+router.post('/categoryedit', postCategoryEdit);    
 // Brand Routes
 router.get('/brand', getBrand);
 router.get('/addbrand', getAddBrand);
@@ -94,6 +94,9 @@ router.get('/deletecoupon/:id', deleteCoupon);
 router.get('/orders', getOrdersPage);
 router.get('/orderStatus/:id', getOrderStatusEdit);
 router.post('/orderStatus', postOrderStatusEdit);
+router.get('/salesreport',getAdminSalesReport)
+
+
 
 
 router.use(verifyAdmin)

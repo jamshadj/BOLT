@@ -672,8 +672,15 @@ const getAddCoupon = (req, res) => {
 const postAddCoupon = async (req, res) => {
   const {name, code, discount, expiration_date, minimum_purchase_amount, maximum_uses } = req.body;
   try {
+    // const existingCoupon = await categoryModel.findOne({
+    //   name: { $regex: new RegExp(`^${couponcheck}$`, 'i') }
+    // });
+    // if (existingCoupon) {
+    //   const msg = "Category is already added";
+    //   res.redirect('/admin/addCoupon');
+    // }   
     const coupon = new couponModel({
-      name,
+      name,    
       code,
       discount,
       expiration_date,
@@ -791,6 +798,121 @@ const adminLogout= async(req,res)=>{
   res.redirect('/admin')
 }
 
+const getAdminSalesReport = async (req, res) => {
+  const start = req.query.start;
+  const end = req.query.end;
+  let orders;
+  let deliveredOrders;
+  let salesCount;
+  let salesSum;
+  let result;
+  
+  if (start && end) {
+    orders = await orderModel.find({ date: { $gte: start, $lt: end } }).lean();
+    deliveredOrders = orders.filter(order => order.orderStatus === "delivered");
+    salesCount = await orderModel.countDocuments({ orderDate: { $gte: start, $lt: end }, orderStatus: "delivered" });
+    salesSum = deliveredOrders.reduce((acc, order) => acc + order.totalPrice, 0);
+  } else {
+    salesCount = await orderModel.countDocuments({ orderStatus: "delivered" });
+    orders = await orderModel.find({ orderStatus: "delivered" }).lean();
+    deliveredOrders = orders.filter(order => order.orderStatus === "delivered");
+    result = await orderModel.aggregate([
+      { $match: { orderStatus: "delivered" } },
+      { $group: { _id: null, totalPrize: { $sum: "$totalPrice" } } }
+    ]);
+    salesSum = result.length > 0 ? result[0].totalPrize : 0;
+  }
+  
+  const users = await orderModel.distinct('user');
+  const userCount = users.length;
+  console.log('orders:', orders);
+  console.log('userCount:', userCount, 'salesCount:', salesCount, 'salesSum:', salesSum, 'deliveredOrders:', deliveredOrders);
+  res.render('admin/adminSalesreport', { userCount, salesCount, salesSum, deliveredOrders });
+};
+const getAdminDashboard=async (req, res) => {
+  try {
+      const orderCount = await orderModel.countDocuments().lean();
+
+      const deliveredOrders = await orderModel.find({ orderStatus: "delivered" }).lean();
+
+      let totalRevenue = 0;
+      let Orders = await Promise.all(deliveredOrders.map(async (item) => {
+          totalRevenue = totalRevenue + item.totalPrice;
+          return item;
+      }));
+
+      const monthlyDataArray = await orderModel.aggregate([
+          { $match: { orderStatus: "delivered" } },
+          {
+              $addFields: {
+                  orderDateConverted: {
+                      $toDate: "$date"
+                  }
+              }
+          },
+          {
+              $group: {
+                  _id: { $month: "$orderDateConverted" },
+                  sum: { $sum: "$totalPrice" }
+              }
+          },
+      ]);
+
+      const monthlyReturnArray = await orderModel.aggregate([
+          {
+              $match: { orderStatus: "Return" }
+          },
+          {
+              $group: {
+                  _id: { $month: "$date" },
+                  sum: { $sum: "$totalPrice" }
+              }
+          }
+      ]);
+
+      let monthlyDataObject = {};
+      let monthlyReturnObject = {}
+      monthlyDataArray.map((item) => {
+          monthlyDataObject[item._id] = item.sum;
+      });
+      monthlyReturnArray.map(item => {
+          monthlyReturnObject[item._id] = item.sum
+      })
+      let monthlyReturn = []
+      for (let i = 1; i <= 12; i++) {
+          monthlyReturn[i - 1] = monthlyReturnObject[i] ?? 0
+      }
+      let monthlyData = [];
+      for (let i = 1; i <= 12; i++) {
+          monthlyData[i - 1] = monthlyDataObject[i] ?? 0;
+      }
+      const online = await orderModel.find({ paymentMethod: "Online-payment" }).countDocuments().lean();
+      const cod = await orderModel.find({ paymentMethod: "COD" }).countDocuments().lean();
+      
+      const userCount = await usermodel.countDocuments().lean();
+      const productCount = await productModel.countDocuments().lean();
+      res.render("admin/Adminhome", {
+          totalRevenue,
+          orderCount,
+          monthlyData,
+          monthlyReturn,
+          online,
+          cod,
+          productCount,
+          userCount,
+      });  
+      console.log( totalRevenue,
+        orderCount,
+        monthlyData,
+        monthlyReturn,
+        online,
+        cod,
+        productCount,
+        userCount);
+  } catch (error) {
+      console.log(error)
+  }
+}
 
 
 module.exports = {
@@ -811,6 +933,7 @@ module.exports = {
   //brand
   getBrand,
   getAddBrand,postAddBrand,
+  getAdminSalesReport,
   blockBrand,unblockBrand,
   getBrandEdit,postBrandEdit,
 
@@ -831,5 +954,6 @@ module.exports = {
 
 
   //order
-  getOrdersPage,getOrderStatusEdit,postOrderStatusEdit
+  getOrdersPage,getOrderStatusEdit,postOrderStatusEdit,
+  getAdminDashboard
 };

@@ -115,17 +115,21 @@
             <div class="row" style="background-color: #e5e7e7; margin: 1rem;">
                 {{#each this.orderItems}}
                 <div class="col-lg-3 col-6">
-                    <img src="{{this.image}}" alt="{{this.name}}" style="max-width: 69%; margin: 1rem;">
+                    <img src="/photos/{{this.image}}" alt="{{this.name}}" style="max-width: 69%; margin: 1rem;">
                 </div>
-                <div class="col-lg-4 col-6" style="margin-top: auto; margin-bottom: auto;">
-                    <h5>{{this.name}}</h5>
-                    <p>Price: ${{this.price}}</p>
-                    <p>Quantity: {{this.quantity}}</p>
+               <div class="col-lg-4 col-6" style="margin-top: auto; margin-bottom: auto;">
+                    <a href="/orders/{{this._id}}"><h3 style="font-size: 19px;
+    font-weight: bold;">{{this.name}}</h3></a>
+                </div> 
+                 <div class="col-lg-2 col-6" style="margin-top: auto; margin-bottom: auto;">
+                    <p style="    font-weight: bold;
+    color: black;">₹{{this.price}}</p>
+                </div>
+                   <div class="col-lg-3 col-6" style="margin-top: auto; margin-bottom: auto;">
+                    <p style="font-weight: 700;">{{this.status}}</p>
                 </div>
                 {{/each}}
-                <div class="col-lg-1 col-6" style="margin-top: auto; margin-bottom: auto;">
-                    <p>Date: {{this.date}}</p>
-                </div>
+             
             </div>
             {{/each}}
         </div>

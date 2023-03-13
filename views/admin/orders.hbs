@@ -630,14 +630,15 @@ justify-content: center; width: 100vw;">
        <th scope="col">View</th>
       <th scope="col">Edit</th>
   </thead>
-  <tbody>
+   <tbody>
      {{#each orders}}
     <tr>
   <th scope="row">{{@index}}</th>
      
-        <td style="font-size: 11px;">{{this.shippingAddress}}</td>
+        <td style="font-size: 11px;">{{this._id}}</td>
+          <td style="font-size: 11px;">{{this.shippingAddress.name}}</td>
         <td style="font-size: 11px;">
-        {{#each orderItems}}
+        {{#each this.orderItems}}
         <li>
            {{this.name}}
         </li>
@@ -646,7 +647,7 @@ justify-content: center; width: 100vw;">
        </td>
         <td style="font-size: 11px;">{{this.totalPrice}}</td>
          <td style="font-size: 11px;">{{this.orderStatus}}</td>
-          <td style="font-size: 11px;"><img src="/images/view icom.png" alt=""></td>
+          <td style="font-size: 11px;"><img src="/images/view icom.png" alt="" width="13%"></td>
             <td><a href="/admin/orderStatus/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a>
         
         
