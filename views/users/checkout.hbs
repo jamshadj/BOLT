@@ -126,7 +126,7 @@
                         <div class="col-lg-6" style=" margin-top: 1rem;display: flex; justify-content: center;">
                             <div class="radio-container" style="width: 21rem;">
                                 <div>
-                                    <input type="radio" value="{{this.id}}" name="useraddress" required >
+                                    <input type="radio" value="{{this.id}}" name="useraddress" checked >
                                     <label for="address-2">
                                         <span class="top__text">{{this.firstname}}{{this.lastname}}</span>
                                         <p>{{this.address}} near  {{this.landmark}},{{this.state}}-{{this.pincode}}</p>
@@ -182,6 +182,7 @@
                             </div>
                             <button type="submit" class="site-btn">Place order</button>
                         </div>
+                        <p class="text-danger">{{msg}}</p>
                     </div>
                 </div>
             </form>

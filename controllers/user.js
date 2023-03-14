@@ -24,7 +24,6 @@ const getHomePage = async (req, res) => {
   let product = await productModel.find({block: false}).limit(8).lean();
   let brand = await brandModel.find().limit(4).lean();
   let banner = await bannerModel.find().lean();
-  console.log(banner);
   let user = await req.session.user;
   res.render("users/Home", {
     CSS: ["stylesheet/home.css"],
@@ -471,7 +470,8 @@ const getUserCheckout = async (req, res) => {
 
   }
 
-  res.render('users/checkout', { products, totalAmount, address, cart, coupon, cashback, itemprize, users })
+  res.render('users/checkout', { products, totalAmount, address, cart, coupon, cashback, itemprize, users,msg })
+  msg=null
   cashback = null
 
 }
@@ -479,7 +479,7 @@ const getUserCheckout = async (req, res) => {
 
 
 const postUserCheckout = async (req, res) => {
-
+  
   const userId = req.session.user._id;
   const user = await UserModel.findById(userId).lean();
 
@@ -507,6 +507,14 @@ const postUserCheckout = async (req, res) => {
   orderItems.forEach((item) => {
     totalItemsPrice += item.quantity * item.price;
   });
+  
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].quantity < orderItems[i].quantity) {
+      msg=`${products[i].productname} is out of stock.`
+      return res.redirect('/checkout')
+    }
+  }
+  
 
   let discount = 0;
   let coupon = req.session.coupon;
@@ -899,7 +907,7 @@ const getProfile = async (req, res) => {
   try {
     const userId = req.session.user._id;
     const user = await UserModel.findById(userId).lean()
-    const address = user.address;
+    const address = user.address; 
     res.render('users/profile', { user, address });
   } catch (err) {
     console.error(err);
@@ -909,23 +917,28 @@ const getProfile = async (req, res) => {
 };     
 
 //order history
-const getOrderHistory = async (req, res) => {
+const getOrderHistory = async (req, res) => { 
   const user = req.session.user;
   const orders = await orderModel.find({ user: user._id }).lean();
   res.render('users/ordersHistory', { user, orders });
 }
        
-   
-const getOrders=async (req,res)=>{
-  const proId=req.params.id
-  console.log(proId);
-  const orderDetails=await orderModel.find({"orderItems._id":proId}).lean()
-  console.log(orderDetails);
-  res.render('users/order-History-View', { orderDetails });
-
+const getOrders = async (req, res) => {
+  const proId = req.params.id;
+  const order = await orderModel.findOne({ orderItems: { $elemMatch: { _id: proId } } }).lean();
+ 
+  const orderItem = order.orderItems.find(item => item._id.toString() === proId);
+  let pending=(orderItem.status==='pending')
+  let delivered=(orderItem.status=='delivered')
+  let shipped=(orderItem.status=='shipped')
+  let processing=(orderItem.status=='processing')
+  console.log(order.date);
+  order.date= order.date.toLocaleDateString()
+  res.render('users/order-History-View',{orderItem,order,pending,delivered,shipped,processing,})
 }
 
 
+ 
 
 module.exports = {      
   // Home page

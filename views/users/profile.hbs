@@ -292,21 +292,22 @@
           <h6 class="mb-0">Address</h6>
         </div>
         <div class="col-sm-9 text-secondary">
-          {{#if address}}
-            {{#each address}}
-              <div>{{this}}</div>
+          {{#if user.address}}
+            {{#each user.address}}
+              <div style="border: 1px solid;  padding: 1rem;"><p>{{this.firstname}}{{this.lastname}}</p>
+              <p>{{this.address}}{{this.state}}-{{this.pincode}}</p>
+              <p>{{this.phonenumber}}</p>
+             <div class="d-flex"><div><a href="">Edit</a></div><div style="margin-left: auto; "><a class="text-danger" href="">Delete</a></div></div> 
+
+              
+              </div>
             {{/each}}
-          {{else}}
+            {{else}}
             No address found.
           {{/if}}
         </div>
       </div>
       <hr>
-      <div class="row">
-        <div class="col-sm-12">
-          <a class="btn btn-info" target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-        </div>
-      </div>
     </div>
   </div>
 </div>

@@ -17,7 +17,7 @@ const {
       blockBrand, unblockBrand,
     
       // user
-      getUsers, blockUser, unblockUser,
+      getUsers, blockUser, unblockUser,  
     
       // banner
       getBanner, getAddBanner, PostAddBanner, deleteBanner,

@@ -106,56 +106,78 @@
             </div>
         </div>
     </header>
- <section class="product-details spad">
-    <div class="container" style="margin-top: 13px;">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="product__details__pic">
-                    <div class="product__details__slider__content">
-                        <div class="product__details__pic__slider owl-carousel">
-                            <div class="wrap-pic-w pos-relative" id="image-zoom" style="z-index: 10;">
-                                <img src="/images/5.jpg" alt="IMG-PRODUCT">
+    <section class="product-details spad">
+        <div class="container" style="margin-top: 13px;">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__slider__content">
+                            <div class="product__details__pic__slider owl-carousel">
+                                <div class="wrap-pic-w pos-relative" id="image-zoom" style="z-index: 10;">
+                                    <img src="/photos/{{orderItem.image}}" alt="IMG-PRODUCT">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="product__details__text" style="margin-top: 2rem;">
-                        <h6>Order ID: <span>{{orderDetails._id}}</span></h6>
-                        <h3> {{orderDetails.[0].orderItems.name}} <span>Brand: {{orderDetails.[0].orderItems.brand}}</span></h3>
-                        <h3><span>Quantity: {{orderDetails.[0].orderItems.quantity}}</span></h3>
-                        <div class="product__price">₹ {{orderDetails.[0].orderItems.price}}</div>
-                        <h6 style="margin: 10px;">Shipping Address: <span>{{orderDetails.[0].shippingAddress}}</span></h6>
-                        <h6 style="margin: 10px;">Ordered Date: <span>{{orderDetails.[0].orderedDate}}</span></h6>
-                        <div class="product__details__button">
-                            <a href="/addtocart/{{orderDetails.[0].orderItems._id}}" class="cart-btn"><span class="icon_bag_alt"></span>Add to cart</a>
+                <div class="col-lg-6">
+                    <div class="product__details__text" style="margin-top: 2rem;">
+                        <h6>Order ID: <span>{{order._id}}</span></h6>
+                        <h2 style="font-weight: 500;">{{orderItem.name}}</h2>
+                        <h3><span>Quantity: {{orderItem.quantity}}</span></h3>
+                        <div class="product__price">₹ {{orderItem.price}}</div>
+                        <h6 style="font-size: 17px; font-weight: 500;">Shipping Address:
+                            <span>{{order.shippingAddress.name}}{{order.shippingAddress.address}}{{order.shippingAddress.name}}{{order.shippingAddress.state}}-{{order.shippingAddress.pincode}}</span>
+                        </h6>
+                        <h6 style="margin-top: 10px;">Ordered Date: <span>{{order.date}}</span></h6>
+                        {{#if pending}}
+                        <div class="product__details__button" style="margin-top: 4rem;">
+                            <a href="/cancel-order/{{orderDetails.[0].orderItems._id}}" class="cart-btn">Cancel
+                                Order</a>
                             <ul></ul>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        {{else}}
+                        <div class="product__details__button" style="margin-top: 4rem;">
+                            <a href="/return-order/{{orderDetails.[0].orderItems._id}}" class="cart-btn">Return
+                                Order</a>
+                            <ul></ul>
                         </div>
-                       
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="product__details__tab">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
-                        </li>
-                        {{!-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
-                        </li> --}}
-                    </ul>
+                        {{/if}}
+
+                        {{#if pending}}
+                        <p style="font-size: 18px;
+    font-weight: 600;">Pending</p>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 10%"
+                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {{else if processing}}
+                         <p style="font-size: 18px;
+    font-weight: 600;">Processing</p>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {{else if shipped}}
+                         <p style="font-size: 18px;
+    font-weight: 600;">Shipped</p>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
+                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {{else if delivered}}
+                         <p style="font-size: 18px;
+    font-weight: 600;">Delivered</p>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {{/if}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <!-- Search Begin -->
