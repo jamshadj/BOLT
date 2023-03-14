@@ -24,10 +24,11 @@ const getHomePage = async (req, res) => {
   let product = await productModel.find({block: false}).limit(8).lean();
   let brand = await brandModel.find().limit(4).lean();
   let banner = await bannerModel.find().lean();
+  console.log(banner);
   let user = await req.session.user;
   res.render("users/Home", {
     CSS: ["stylesheet/home.css"],
-    product,
+    product,  
     brand,
     banner,
     user,

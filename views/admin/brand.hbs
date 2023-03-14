@@ -339,7 +339,7 @@
         <th scope="col">NO</th>
       <th scope="col">Brand</th>
        <th scope="col">Image</th>
-       <th scope="col">Banner</th>
+      
       <th scope="col">Edit</th>
        <th scope="col">Status</th>
   </thead>
@@ -349,8 +349,7 @@
    <th scope="row">{{@index}}</th>
       <td>{{this.newbrands}}</td>
         <td><img src="/photos/{{this.image.filename}}"style="border-radius: 0px; width: 40px; height: 60px;  " alt=""></td>
-   <td><img src="/photos/{{this.banner.filename}}"style="border-radius: 0px; width: 90px; height: 60px;  " alt=""></td>
-    <td><a href="/admin/brandedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a>
+   <td><a href="/admin/brandedit/{{this._id}}"><button type="button" class="btn btn-primary">Edit</button></a>
      <td>  {{#if this.block}}
                 <button
                   onclick="if( confirm(' Are you sure to unblock category?')){window.location.href='/admin/unblockbrand/{{this._id}}' }"

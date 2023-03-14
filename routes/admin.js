@@ -27,7 +27,7 @@ const {
       postCouponEdit, deleteCoupon,
     
       // orders
-      getOrdersPage, getOrderStatusEdit, postOrderStatusEdit, getAdminSalesReport, getAdminDashboard
+       getAdminSalesReport, getAdminDashboard, getAllOrders, displayOrderStatusEditPage, updateOrderStatus
     
       
     } = require('../controllers/admin');
@@ -91,9 +91,9 @@ router.post('/couponedit', postCouponEdit);
 router.get('/deletecoupon/:id', deleteCoupon);
 
 // Order Routes
-router.get('/orders', getOrdersPage);
-router.get('/orderStatus/:id', getOrderStatusEdit);
-router.post('/orderStatus', postOrderStatusEdit);
+router.get('/orders', getAllOrders);
+router.get('/orderStatus/:id', displayOrderStatusEditPage);
+router.post('/orderStatus',updateOrderStatus);
 router.get('/salesreport',getAdminSalesReport)
 
 

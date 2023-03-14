@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const brandSchema = new mongoose.Schema({
-  newbrands: { 
+  newbrands: {    
     type: String, 
     required: true
    },
@@ -9,10 +9,6 @@ const brandSchema = new mongoose.Schema({
     type:Object,
     required : true,
 }, 
- banner:{
-  type:Object,
-  required : true,
-},  
    block:{
     type:Boolean,
     required:true

@@ -9,123 +9,172 @@ const couponModel = require("../models/couponModel");
 const orderModel=require("../models/orderModel");
 const sharp = require("sharp");
 
-//ADMIN
+// Define function to render the Admin login page
 
+let msg=null;
 
 const getAdminLoginPage = (req, res) => {
   if (req.session.admin) {
-    res.redirect("admin/home")
+    res.redirect("admin/home"); // Redirect to admin home page if already logged in
   } else {
     if (msg == undefined) {
-      msg == null;
     } else { 
-      msg == msg;
+      msg = msg; // Set message to the value of msg if defined
     }
-    res.render("admin/AdminLogin", { CSS: ["stylesheet/adminlogin.css"], msg });
-    msg = null;
-  }
- 
+    res.render("admin/AdminLogin", { CSS: ["stylesheet/adminlogin.css"], msg }); // Render the Admin login page with any messages
+    msg = null; // Reset the message after rendering the page
+  } 
 };
 
+// Define function to render the Admin home page
 const getAdminHomePage = (req, res) => {
   if (req.session.admin) {
-    res.render("admin/Adminhome", { CSS: ["stylesheet/style.css"] });
+    res.render("admin/Adminhome", { CSS: ["stylesheet/style.css"] }); // Render the Admin home page if logged in
   } else {
-    res.redirect("/admin");
+    res.redirect("/admin"); // Redirect to the Admin login page if not logged in
   }
 }
 
-
-var msg;
-
+// Define function to handle Admin login form submission
 const postAdminLogin = async (req, res) => {
   const { email, password } = req.body;
   const adminmail = await adminModel.findOne({ email: email });
 
   if (adminmail) {
     if (password == adminmail.password) {
-      req.session.admin=true
-      res.redirect("/admin/home");
+      req.session.admin = true; // Set session variable to indicate successful login
+      res.redirect("/admin/home"); // Redirect to the Admin home page if login successful
     } else {
-      msg = "Password incorrect"; 
-      res.redirect("/admin"); 
+      msg = "Password incorrect"; // Set error message if password is incorrect
+      res.redirect("/admin"); // Redirect to the Admin login page
     }
   } else {
-    msg = "check email and password"; 
-    res.redirect("/admin");
+    msg = "Check email and password"; // Set error message if email is not found
+    res.redirect("/admin"); // Redirect to the Admin login page
   }
 };
 
 
-//PRODUCT
+const adminLogout= async(req,res)=>{
+  req.session.destroy()
+  res.redirect('/admin')
+}
 
+
+//Product Management 
+
+
+// Define function to render the Products page
 const getProductsPage = async (req, res) => {
   let productsdetail = await productModel.find().lean();
   if (req.session.admin) {
-    res.render("admin/products", { productsdetail ,msg});
+    res.render("admin/products", { productsdetail, msg });
   } else {
-    res.redirect('/admin')
+    res.redirect('/admin');
   }
- 
 };
-//ADD PRODUCT
+
+// Define function to render the Add Product page
 const getAddProducts = async (req, res) => {
   let category = await categoryModel.find().lean();
   let brands = await brandModel.find().lean();
   if (req.session.admin) {
-    res.render("admin/addProduct", { category, brands,msg });
+    res.render("admin/addProduct", { category, brands, msg });
+
   } else {
-    res.redirect('/admin')
+    res.redirect('/admin');
   }
- 
 };
-
-
 const postAddProducts = async (req, res) => {
   let block = false;
   const { productname, category, brand, quantity, prize, MRP, description } = req.body;
-    
-  await sharp(req.files.image[0].path)
-                .png()
-                .resize(250, 250, {
-                    kernel: sharp.kernel.nearest,
-                    fit: 'contain',   
-                    position: 'center',
-                    background: { r: 255, g: 255, b: 255, alpha: 0 }
-                })
-                .toFile(req.files.image[0].path + ".png")
-            req.files.image[0].filename = req.files.image[0].filename + ".png"
-            req.files.image[0].path = req.files.image[0].path + ".png"
 
-  
-  let products = new productModel({
-    productname,
-    category,
-    brand,
-    quantity,
-    prize,
-    MRP,
-    description,
-    block,
-    image:req.files.image[0],
-    subimage: req.files.subimage,
-  });
-
-  products.save((err, data) => {
-    if (err) {
-      msg =err
-      console.log(err);
-      res.redirect("/admin/addproducts")
-    } else {
-      console.log("saved");
-      res.redirect("/admin/products");
+  try {
+    let products;
+    if (req.files?.image && req.files?.subimage) {
+      await sharp(req.files.image[0].path)
+        .png()
+        .resize(250, 250, {
+          kernel: sharp.kernel.nearest,
+          fit: 'contain',
+          position: 'center',
+          background: { r: 255, g: 255, b: 255, alpha: 0 }
+        })
+        .toFile(req.files.image[0].path + ".png");
+      req.files.image[0].filename = req.files.image[0].filename + ".png";
+      req.files.image[0].path = req.files.image[0].path + ".png";
+      products = new productModel({
+        productname,
+        category,
+        brand,
+        quantity,
+        prize,
+        MRP,
+        description,
+        block,
+        image: req.files.image[0],
+        subimage: req.files.subimage,
+      });
+    } else if (!req.files?.image && req.files?.subimage) {
+      products = new productModel({
+        productname,
+        category,
+        brand,
+        quantity,
+        prize,
+        MRP,
+        description,
+        block,
+        subimage: req.files.subimage,
+      });
+    } else if (!req.files?.image && !req.files?.subimage) {
+      products = new productModel({
+        productname,
+        category,
+        brand,
+        quantity,
+        prize,
+        MRP,
+        description,
+        block,
+      });
+    } else if (req.files?.image && !req.files?.subimage) {
+      await sharp(req.files.image[0].path)
+        .png()
+        .resize(250, 250, {
+          kernel: sharp.kernel.nearest,
+          fit: 'contain',
+          position: 'center',
+          background: { r: 255, g: 255, b: 255, alpha: 0 }
+        })
+        .toFile(req.files.image[0].path + ".png");
+      req.files.image[0].filename = req.files.image[0].filename + ".png";
+      req.files.image[0].path = req.files.image[0].path + ".png";
+      products = new productModel({
+        productname,
+        category,
+        brand,
+        quantity,
+        prize,
+        MRP,
+        description,
+        block,
+        image: req.files.image[0],
+      });
     }
-  });
-}
+    await products.save();
+    console.log("saved");
+    return res.redirect("/admin/products");
+  } catch (error) {
+    console.log(error);
+   msg= "Please ensure that all details entered are correct.";
+
+    return res.redirect("/admin/addproducts");
+  }
+};
 
 
-
-//EDIT PRODUCT
+// GET method for product edit page
 const getProductEdit = async (req, res) => {
   let proid = req.params.id;
   let category = await categoryModel.find().lean();
@@ -133,15 +182,14 @@ const getProductEdit = async (req, res) => {
   let product = await productModel.findOne({ _id: proid }).lean();
 
   if (req.session.admin) {
-    res.render("admin/productedit", { product, category, brands });
+    res.render("admin/productedit", { product, category, brands, msg });
+   
   } else {
     res.redirect('/admin')
   }
-  
 };
 
-
-
+// POST method for product edit page
 const postProductEdit = async (req, res) => {
   const {
     productname,
@@ -156,6 +204,18 @@ const postProductEdit = async (req, res) => {
 
   try {
     let product;
+
+    // Validate image
+    if (req.files?.image) {
+      const image = req.files.image[0];
+      const validExtensions = [".jpg", ".jpeg", ".png",".webp"];
+      const fileExtension = path.extname(image.originalname).toLowerCase();
+
+      if (!validExtensions.includes(fileExtension)) {
+        throw new Error("Invalid image file type");
+      }
+    }
+
     if (req.files?.image && req.files?.subimage) {
       product = await productModel.updateOne(
         { _id },
@@ -224,10 +284,12 @@ const postProductEdit = async (req, res) => {
     return res.redirect("/admin/products");
   } catch (error) {
     console.error(error);
+   msg=" Please check the fields and ensure that they are correct. If the issue persists, please contact the system administrator for further assistance."
     return res.status(500).send("Internal Server Error");
   }
 };
 
+// DELETE method for deleting product's main image
 const deleteProductMainImage = async (req, res) => {
   try {
     const id = req.params.id;
@@ -239,136 +301,142 @@ const deleteProductMainImage = async (req, res) => {
   }
 };
 
+
 const deleteProductSubImage=async(req,res)=>{
 
 }
-
-//BLOCK PRODUCT
+// BLOCK PRODUCT
 const blockProduct = async (req, res) => {
   try {
-    const proid = req.params.id;
-    await productModel.findByIdAndUpdate(
-      { _id: proid },
-      { $set: { block: true } }
-    );
-    res.redirect("/admin/products");
-  } catch (err) {
-    console.error(err);
-    res.redirect("/admin/products");
+  const productId = req.params.id;
+  await productModel.findByIdAndUpdate(
+  { _id: productId },
+  { $set: { block: true } }
+  );
+  res.redirect("/admin/products");
+  } catch (error) {
+  console.error(error);
+  res.redirect("/admin/products");
   }
-};
-//unblock PRODUCT
-const unblockProduct = async (req, res) => {
+  };
+  
+  // UNBLOCK PRODUCT
+  const unblockProduct = async (req, res) => {
   try {
-    const proid = req.params.id;
-    await productModel.findByIdAndUpdate(
-      { _id: proid },
-      { $set: { block: false } }
-    );
-    res.redirect("/admin/products");
-  } catch (err) {
-    console.error(err);
-    res.redirect("/admin/products");
+  const productId = req.params.id;
+  await productModel.findByIdAndUpdate(
+  { _id: productId },
+  { $set: { block: false } }
+  );
+  res.redirect("/admin/products");
+  } catch (error) {
+  console.error(error);
+  res.redirect("/admin/products");
   }
-};
-
-
+  };
+  
+  
 //ADD CATEGORY
 const getCategory = async (req, res) => {
   try {
-    const category = await categoryModel.find().lean();
-    if (req.session.admin) {
-      res.render("admin/AddCategory", { category, msg });
-    } else {
-      res.redirect('/admin');
+  const category = await categoryModel.find().lean();
+  if (req.session.admin) {
+  res.render("admin/AddCategory", { category, msg });
+  } else {
+  res.redirect('/admin');
+  }
+  } catch (err) {
+  console.error(err);
+   msg = "Sorry, there was an error";
+  res.render("admin/AddCategory", { category: [],msg});
+  }
+  };
+  
+  const postAddCategory = async (req, res) => {
+
+    try {
+      const { newcategory } = req.body;
+      const categorycheck = newcategory.trim();
+      const existingCategories = await categoryModel.findOne({
+        newcategories: { $regex: new RegExp(`^${categorycheck}$`, 'i') }
+      });
+  
+      if (existingCategories) {
+        console.log("hrr");
+        msg = "The category you are trying to add already exists.";
+        console.log(msg);
+        res.redirect('/admin/AddCategory');
+      } else {
+        const newCategories = new categoryModel({ newcategories: categorycheck, block: false });
+        await newCategories.save();
+        res.redirect('/admin/AddCategory');
+      }
+    } catch (err) {
+      console.error(err);
+      msg = "Sorry, there was an error adding the category. Please try again later";
+      res.render('admin/AddCategory', { msg });
     }
-  } catch (err) {
-    console.error(err);
-    const msg = "Sorry, there was an error";
-    res.render("admin/AddCategory", { category: [], msg });
-  }
-};
-
-const postAddCategory = async (req, res) => {
+  };
+                
+  //BLOCK CATEGORY
+  const blockCategory = async (req, res) => {
   try {
-    const { newcategory } = req.body;
-    const categorycheck = newcategory.trim();
-    const existingCategories = await categoryModel.findOne({
-      newcategories: { $regex: new RegExp(`^${categorycheck}$`, 'i') }
-    });
-
-    if (existingCategories) {
-       msg = "Category is already added";
-      res.redirect('/admin/AddCategory');
-    } else {
-      const NewCategories = new categoryModel({ newcategories: categorycheck, block: false });
-      await NewCategories.save();
-      res.redirect('/admin/AddCategory');
-    }
+  const proid = req.params.id;
+  await categoryModel.findByIdAndUpdate(
+  { _id: proid },
+  { $set: { block: true } }
+  );
+  res.redirect("/admin/addcategory");
   } catch (err) {
-    console.error(err);
-    const msg = "Sorry, there was an error";
-    res.render('admin/AddCategory', { msg });
+  res.redirect("/admin/addcategory");
   }
-};
-
-//BLOCK CATEGORY
-const blockCategory = async (req, res) => {
+  };
+  
+  const unblockCategory = async (req, res) => {
   try {
-    const proid = req.params.id;
-    await categoryModel.findByIdAndUpdate(
-      { _id: proid },
-      { $set: { block: true } }
-    );
-    res.redirect("/admin/addcategory");
+  const proid = req.params.id;
+  await categoryModel.findByIdAndUpdate(
+  { _id: proid },
+  { $set: { block: false } }
+  );
+  res.redirect("/admin/addcategory");
   } catch (err) {
-    res.redirect("/admin/addcategory");
+  res.redirect("/admin/addcategory");
   }
-};
-
-const unblockCategory = async (req, res) => {
+  };
+  
+  const getCategoryEdit = async (req, res) => {
   try {
-    const proid = req.params.id;
-    await categoryModel.findByIdAndUpdate(
-      { _id: proid },
-      { $set: { block: false } }
-    );
-    res.redirect("/admin/addcategory");
-  } catch (err) {
-    res.redirect("/admin/addcategory");
+  const catId = req.params.id;
+  const category = await categoryModel.findOne({ _id: catId }).lean();
+  if (req.session.admin) {
+  res.render("admin/categoryEdit", { category });
+  } else {
+  res.redirect('/admin');
   }
-};
-
-const getCategoryEdit = async (req, res) => {
+  } catch (err) {
+  console.error(err);
+  res.redirect('/admin/addcategory');
+  }
+  };
+  
+  const postCategoryEdit = async (req, res) => {
   try {
-    const catId = req.params.id;
-    const category = await categoryModel.findOne({ _id: catId }).lean();
-    if (req.session.admin) {
-      res.render("admin/categoryEdit", { category });
-    } else {
-      res.redirect('/admin');
-    }
+  const { newcategories, _id } = req.body;
+  await categoryModel.findByIdAndUpdate(
+  { _id },
+  { $set: { newcategories } }
+  );
+  res.redirect("/admin/Addcategory");
   } catch (err) {
-    console.error(err);
-    res.redirect('/admin/addcategory');
+  console.error(err);
+  res.redirect('/admin/addcategory');
   }
-};
+  };
 
-const postCategoryEdit = async (req, res) => {
-  try {
-    const { newcategories, _id } = req.body;
-    await categoryModel.findByIdAndUpdate(
-      { _id },
-      { $set: { newcategories } }
-    );
-    res.redirect("/admin/Addcategory");
-  } catch (err) {
-    console.error(err);
-    res.redirect('/admin/addcategory');
-  }
-};
+ //BRAND
 
-//BRAND
+//Retrieve all brands from the database and render the brand page
 const getBrand = async (req, res) => {
   try {
     let brands = await brandModel.find().lean();
@@ -383,6 +451,7 @@ const getBrand = async (req, res) => {
   }
 };
 
+//Render the add brand page
 const getAddBrand= (req,res)=>{
   try {
     if (req.session.admin) {
@@ -396,6 +465,7 @@ const getAddBrand= (req,res)=>{
   }
 }
 
+//Add a new brand to the database
 const postAddBrand = async (req, res) => {
   try {
     let block = false;
@@ -405,8 +475,10 @@ const postAddBrand = async (req, res) => {
       newbrands: { $regex: new RegExp(`^${brandcheck}$`, 'i') }
     });
 
+    //Check if the brand already exists, if it does redirect back to the add brand page
     if (existingBrand) {
       console.log("Brand already exists");
+      msg ="The category you are trying to add already exists."
       res.redirect('/admin/addbrand');
       return;
     }
@@ -415,8 +487,8 @@ const postAddBrand = async (req, res) => {
     let NewBrands = new brandModel({
       newbrands,
       block,
-      image: req.files.image[0],
-      banner: req.files.banner[0]
+      image: req.files.image[0], //Get the image file from the request
+      banner: req.files.banner[0] //Get the banner file from the request
     });
     await NewBrands.save();
     console.log("Success");
@@ -427,8 +499,7 @@ const postAddBrand = async (req, res) => {
   }
 };
 
-
-//BLOCK BRAND
+//Block a brand in the database
 const blockBrand = async (req, res) => {
   try {
     let braid = req.params.id;
@@ -438,11 +509,13 @@ const blockBrand = async (req, res) => {
     );
     res.redirect("/admin/brand");
   } catch (error) {
+    msg=error;
     console.log(error);
     res.status(500).send("Internal Server Error");
   }
 };
 
+//Unblock a brand in the database
 const unblockBrand = async (req, res) => {
   try {
     let braid = req.params.id;
@@ -455,9 +528,8 @@ const unblockBrand = async (req, res) => {
     console.log(error);
     res.status(500).send("Internal Server Error");
   }
-};
+};  
 
-//Edit brand
 const getBrandEdit = async (req, res) => {
   try {
     let braId = req.params.id;
@@ -477,59 +549,24 @@ const postBrandEdit = async (req, res) => {
   try {
     const { newbrands, _id } = req.body;
 
+    let updateObject = {
+      $set: {
+        newbrands
+      }
+    };
+
     if (req.files?.image && req.files?.banner) {
-      let brand=await brandModel
-      .findByIdAndUpdate(
-        { _id },
-        {
-          $set: {
-            newbrands,
-            image: req.files.image[0],
-            banner: req.files.image[0],
-          },
-        }
-      )
-      .lean();
-      return res.redirect("/admin/brand");
+      updateObject.$set.image = req.files.image[0];
+      updateObject.$set.banner = req.files.image[0];
     } else if (!req.files?.image && req.files?.banner) {
-      let brand=await brandModel
-      .findByIdAndUpdate(
-        { _id },
-        {
-          $set: {
-            newbrands,
-            banner: req.files.image[0],
-          },
-        }
-      )
-      .lean();
-      return res.redirect("/admin/brand");
+      updateObject.$set.banner = req.files.image[0];
     } else if (req.files?.image && !req.files?.banner) {
-      let brand=await brandModel
-      .findByIdAndUpdate(
-        { _id },
-        {
-          $set: {
-            newbrands,
-            image: req.files.image[0],
-          },
-        }
-      )
-      .lean();
-      return res.redirect("/admin/brand");
-    } else {
-      let brand= await brandModel
-      .findByIdAndUpdate(
-        { _id },
-        {
-          $set: {
-            newbrands
-          },
-        }
-      )
-      .lean();
-      res.redirect("/admin/brand");
+      updateObject.$set.image = req.files.image[0];
     }
+
+    let brand = await brandModel.findByIdAndUpdate({ _id }, updateObject).lean();
+    res.redirect("/admin/brand");
+
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
@@ -537,13 +574,12 @@ const postBrandEdit = async (req, res) => {
 };
 
 
-
-//USER
+// Get all users
 const getUsers = async (req, res) => {
   try {
-    let usersdetails = await usermodel.find().lean();
+    let users = await usermodel.find().lean();
     if (req.session.admin) {
-      res.render("admin/users", { usersdetails });
+      res.render("admin/users", { users });
     } else {
       res.redirect("/admin");
     }
@@ -553,12 +589,12 @@ const getUsers = async (req, res) => {
   }
 };
 
-// BLOCK USER
+// Block user
 const blockUser = async (req, res) => {
   try {
-    let UserId = req.params.id;
+    let userId = req.params.id;
     await usermodel.findByIdAndUpdate(
-      { _id: UserId },
+      { _id: userId },
       { $set: { block: true } }
     );
     res.redirect("/admin/users");
@@ -567,12 +603,13 @@ const blockUser = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-//unblock USER
+
+// Unblock user
 const unblockUser = async (req, res) => {
   try {
-    let braid = req.params.id;
+    let userId = req.params.id;
     await usermodel.findByIdAndUpdate(
-      { _id: braid },
+      { _id: userId },
       { $set: { block: false } },
     );
     res.redirect("/admin/users");
@@ -581,8 +618,9 @@ const unblockUser = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
 //BANNER
+
+// Retrieve all banners
 const getBanner = async (req, res) => {
   try {
     let banner = await bannerModel.find().lean();
@@ -597,28 +635,36 @@ const getBanner = async (req, res) => {
   }
 };
 
+// Render add banner form
 const getAddBanner = (req, res) => {
   if (req.session.admin) {
-    res.render("admin/Addbanner");
+    res.render("admin/Addbanner", {msg});
+   msg=null;
   } else {
     res.redirect('/admin');
   }
 };
+
+
+// Add a new banner
 const PostAddBanner = (req, res) => {
   try {
     const { name, description } = req.body;
 
     // Validate image file type
-    if (req.file.mimetype !== 'image/jpeg' && req.file.mimetype !== 'image/png') {
-      throw new Error('Only JPEG and PNG images are allowed');
+    if (req.file.mimetype !== 'image/jpeg' && req.file.mimetype !== 'image/png' && req.file.mimetype !== 'image/webp') {
+      throw new Error('Only JPEG, PNG, and WEBP images are allowed');
     }
+    
 
-
+    // Create new banner instance
     let banner = new bannerModel({
       name,
       description,
       image: req.file,
     });
+
+    // Save banner to database
     banner.save((err, data) => {
       if (err) {
         console.log(err);
@@ -629,11 +675,12 @@ const PostAddBanner = (req, res) => {
       }
     });
   } catch (err) {
-    console.error(err);
-    res.redirect('/admin');
+   msg=err
+    res.redirect('/admin/Addbanner');
   }
 };
 
+// Delete a banner by ID
 const deleteBanner = async (req, res) => {
   try {
     const banId = req.params.id;
@@ -645,8 +692,7 @@ const deleteBanner = async (req, res) => {
     res.redirect('/admin');
   }
 };
-
-//COUPON
+// Get all coupons from the database
 const getCoupon = async (req, res) => {
   try {
     let coupon = await couponModel.find().lean();
@@ -660,27 +706,37 @@ const getCoupon = async (req, res) => {
   }
 };
  
+// Render the add coupon page
 const getAddCoupon = (req, res) => {
   if (req.session.admin) {
-    res.render("admin/addCoupon");
+    res.render("admin/addCoupon" ,{msg});
+    msg=null;
   } else {
     res.redirect("/admin")
   }
 };
  
-
 const postAddCoupon = async (req, res) => {
-  const {name, code, discount, expiration_date, minimum_purchase_amount, maximum_uses } = req.body;
+  const { name, code, discount, expiration_date, minimum_purchase_amount, maximum_uses } = req.body;
   try {
-    // const existingCoupon = await categoryModel.findOne({
-    //   name: { $regex: new RegExp(`^${couponcheck}$`, 'i') }
-    // });
-    // if (existingCoupon) {
-    //   const msg = "Category is already added";
-    //   res.redirect('/admin/addCoupon');
-    // }   
+    // Check if a coupon with the same name already exists
+    const existingCoupon = await couponModel.findOne({
+      name: { $regex: new RegExp(`^${name}$`, 'i') }
+    });
+    if (existingCoupon) {
+      // If a coupon with the same name exists, redirect back to the add coupon page with an error message
+      msg = "Coupon name already exists";
+      return res.redirect('/admin/addCoupon');
+    }
+    // Check if the expiration_date is before today
+    if (new Date(expiration_date) < new Date()) {
+      // If the expiration_date is before today, redirect back to the add coupon page with an error message
+      msg = "Expiration date must be after today";
+      return res.redirect('/admin/addCoupon');
+    }
+    // Create a new coupon object and save it to the database
     const coupon = new couponModel({
-      name,    
+      name,
       code,
       discount,
       expiration_date,
@@ -689,16 +745,20 @@ const postAddCoupon = async (req, res) => {
     });
     await coupon.save();
     console.log("Coupon saved");
+    // Redirect to the coupon page after successfully adding a new coupon
     res.redirect("/admin/coupon");
   } catch (err) {
+    // Handle errors when adding a new coupon
     res.status(500).send("Error saving coupon: " + err);
   }
 };
 
-//edit coupon
+
+// Render the coupon edit page
 const getCouponEdit = async (req, res) => {
   try {
     const copId = req.params.id;
+    // Find the coupon to edit by its id
     const coupon = await couponModel.findOne({ _id: copId }).lean();
     if (req.session.admin) {
       res.render("admin/couponEdit", { coupon });
@@ -706,13 +766,16 @@ const getCouponEdit = async (req, res) => {
       res.redirect("/admin")
     }
   } catch (err) {
+    // Handle errors when retrieving the coupon to edit
     res.status(500).send("Error retrieving coupon: " + err);
   }
 };
 
+// Update an existing coupon in the database
 const postCouponEdit = async (req, res) => {
   const { name, code, _id,discount,expiration_date,minimum_purchase_amount,maximum_uses} = req.body;
   try {
+    // Find the coupon to update by its id and set the new values
     await couponModel.findByIdAndUpdate(
       { _id },
       {
@@ -726,11 +789,14 @@ const postCouponEdit = async (req, res) => {
         },
       }
     );
+    // Redirect to the coupon page after successfully updating the coupon
     res.redirect("/admin/coupon");
   } catch (err) {
+    // Handle errors when updating the coupon
     res.status(500).send("Error updating coupon: " + err);
   }
 };
+
 
 const deleteCoupon = async (req, res) => {
   try {
@@ -741,26 +807,38 @@ const deleteCoupon = async (req, res) => {
     res.status(500).send("Error deleting coupon: " + err);
   }
 };
-   
-//order
+// Get all orders
+const getAllOrders = async (req, res) => {
+  try {
+    // Check if user is authorized to access the admin panel
+    if (!req.session.admin) {
+      return res.redirect('/admin');
+    }
 
-const getOrdersPage =async (req, res) => {
+    // Retrieve all orders from the database
+    const orders = await orderModel.find().lean();
 
-  if (req.session.admin) {
-    let orders=await orderModel.find().lean()
-    res.render("admin/orders",{orders});
-  } else {
-    res.redirect('/admin')
-  }  
+    // Render the orders page with the orders data
+    res.render("admin/orders", { orders });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
 };
 
-
-const getOrderStatusEdit = async (req, res) => {
+// Display the order status edit page
+const displayOrderStatusEditPage = async (req, res) => {
   try {
+    // Retrieve the order id from the request parameters
     const orderId = req.params.id;
+
+    // Retrieve the order from the database using the id
     const order = await orderModel.findById(orderId).lean();
+
+    // Retrieve the possible order status values from the order model schema
     const orderStatusOptions = orderModel.schema.path('orderStatus').enumValues;
 
+    // Render the order status edit page with the order data and the order status options
     res.render('admin/orderStatusEdit', {
       order,
       orderStatusOptions,
@@ -771,32 +849,27 @@ const getOrderStatusEdit = async (req, res) => {
   }
 };
 
-// const Order = require('../models/orderModel'); // import Order model
-
-const postOrderStatusEdit = async (req, res) => {
+// Update the order status
+const updateOrderStatus = async (req, res) => {
   try {
+    // Retrieve the new order status and the order id from the request body
     const { orderStatus, _id } = req.body;
 
-    // find the order by id and update its status
+    // Find the order by id and update its status
     const order = await orderModel.findByIdAndUpdate(
       _id,
       { orderStatus },
       { new: true } // return the updated order
     );
 
-
-    // redirect to the orders page
-    return res.redirect('/admin/orders');
+    // Redirect to the orders page
+    res.redirect('/admin/orders');
   } catch (error) {
     console.error(error);
-    return res.status(500).send('Server error');
+    res.status(500).send('Server error');
   }
 };
 
-const adminLogout= async(req,res)=>{
-  req.session.destroy()
-  res.redirect('/admin')
-}
 
 const getAdminSalesReport = async (req, res) => {
   const start = req.query.start;
@@ -901,14 +974,14 @@ const getAdminDashboard=async (req, res) => {
           productCount,
           userCount,
       });  
-      console.log( totalRevenue,
-        orderCount,
-        monthlyData,
-        monthlyReturn,
-        online,
-        cod,
-        productCount,
-        userCount);
+      // console.log( totalRevenue,
+      //   orderCount,
+      //   monthlyData,
+      //   monthlyReturn,
+      //   online,
+      //   cod,
+      //   productCount,
+      //   userCount);
   } catch (error) {
       console.log(error)
   }
@@ -954,6 +1027,6 @@ module.exports = {
 
 
   //order
-  getOrdersPage,getOrderStatusEdit,postOrderStatusEdit,
+ getAllOrders,displayOrderStatusEditPage,updateOrderStatus,
   getAdminDashboard
 };

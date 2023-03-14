@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const orderSchema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,12 +12,30 @@ const orderSchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           required: true,
         },
-        name: { type: String, required: true },
-        image: { type: String, required: true },
-        quantity: { type: Number, required: true },
-        price: { type: Number, required: true },
-        status:{ type:String,  enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending',}
+        name: {
+          type: String,
+          required: true,
+        },
+        image: {
+          type: String,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        deliveredDate: {
+          type: Date,
+        },
+        status: {
+          type: String,
+          enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
+          default: 'pending',
+        },
       },
     ],
     shippingAddress: {
@@ -28,7 +46,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    itemsPrice: { 
+    itemsPrice: {
       type: Number,
       required: true,
     },
@@ -40,17 +58,16 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    date:{
-      type:Date,
-      required:true,
-    },  
+    date: {
+      type: Date,
+      required: true,
+    },
     orderStatus: {
       type: String,
-      enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
       default: 'pending',
+      required: true,
     },
-  },
-
+  }
 );
 
-module.exports = mongoose.model('Order', orderSchema); 
+module.exports = mongoose.model('Order', OrderSchema);
